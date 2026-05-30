@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Provecta VGV — Performance para construtoras</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --blue:#2B9FF6; --blue-l:#6BBBF9; --blue-d:#0E74CB;
+    --secbg:#0B121E; --surface:#13202F; --surface2:#172A3E;
+    --txt:#EAF1F9; --txt2:#A6B7CB; --muted:#7A8CA1; --ln:rgba(255,255,255,.09); --tint:rgba(43,159,246,.13);
+    --shadow:0 20px 50px rgba(0,0,0,.4);
+  }
+  .light{ --secbg:#F4F7FB; --surface:#FFFFFF; --surface2:#FBFCFE;
+    --txt:#0E1825; --txt2:#46566B; --muted:#7486A0; --ln:#E4EAF2; --tint:#E9F4FE;
+    --shadow:0 14px 36px rgba(11,42,69,.10);}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#0B121E;color:#EAF1F9;font-family:"Hanken Grotesk",system-ui,sans-serif;
+    font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:"Bricolage Grotesque",sans-serif;line-height:1.03;letter-spacing:-.02em;margin:0;font-weight:700}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  section{padding:90px 0;background:var(--secbg);color:var(--txt);position:relative}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--blue-l);display:inline-flex;align-items:center;gap:9px}
+  .light .eyebrow{color:var(--blue-d)}
+  .eyebrow::before{content:"";width:20px;height:1px;background:currentColor}
+  .lead{color:var(--txt2);font-size:19px;max-width:54ch;margin:14px 0 0}
+  .sechead{max-width:720px;margin-bottom:44px}
+  .sechead h2{font-size:clamp(28px,4.4vw,46px);margin-top:14px}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;border-radius:11px;
+    padding:13px 22px;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:.2s}
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 24px rgba(43,159,246,.32)}
+  .btn-primary:hover{background:var(--blue-d);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--txt);border-color:var(--ln)}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue-l)}
+  .light .btn-ghost{color:#0E1825}.light .btn-ghost:hover{color:var(--blue-d)}
+  .btn .ar{transition:.2s}.btn:hover .ar{transform:translateX(3px)}
+
+  .mk{fill:var(--blue);height:26px;width:23px;flex:none}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Bricolage Grotesque";font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .brand .vgv{font-family:"IBM Plex Mono";font-size:10.5px;font-weight:500;color:#fff;background:var(--blue);
+    padding:2px 7px;border-radius:5px;letter-spacing:.06em}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:80;transition:.3s;background:rgba(11,18,30,0)}
+  header.scrolled{background:rgba(10,16,27,.82);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid rgba(255,255,255,.07)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .navlinks{display:flex;gap:28px}
+  .navlinks a{font-size:15px;color:var(--txt2);font-weight:500;position:relative}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--blue);transition:.25s}
+  .navlinks a:hover{color:#fff}.navlinks a:hover::after{width:100%}
+  .burger{display:none;background:none;border:1px solid var(--ln);border-radius:9px;width:42px;height:42px;cursor:pointer}
+  .burger span{display:block;width:18px;height:2px;background:#fff;margin:3px auto;border-radius:2px}
+  .mobile-menu{display:none;flex-direction:column;background:#0E1826;border-bottom:1px solid var(--ln);padding:8px 24px 16px}
+  .mobile-menu a{padding:12px 0;color:var(--txt2);border-bottom:1px solid rgba(255,255,255,.06)}
+  .mobile-menu.open{display:flex}
+
+  .hero{padding:140px 0 96px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 70% at 30% 30%,#000,transparent)}
+  .glow{position:absolute;width:620px;height:620px;border-radius:50%;top:-160px;right:-120px;
+    background:radial-gradient(circle,rgba(43,159,246,.30),transparent 65%);filter:blur(20px);
+    animation:glow 18s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes glow{from{transform:translate(0,0)}to{transform:translate(-60px,50px) scale(1.1)}}
+  .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:50px;align-items:center;position:relative;z-index:2}
+  .hero h1{font-size:clamp(40px,6.2vw,70px);font-weight:800}
+  .hero h1 .hl{color:var(--blue-l)}
+  .anim{opacity:0;animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .hero .lead{font-size:20px;max-width:46ch}
+  .heromini{display:flex;gap:20px;margin-top:26px;color:var(--muted);font-size:13px;flex-wrap:wrap;align-items:center}
+  .heromini b{color:#fff} .heromini .mono{color:var(--txt2)}
+
+  .fcard{background:#fff;color:#0E1825;border-radius:20px;padding:26px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+  .fcard .ft{font-family:"Bricolage Grotesque";font-weight:700;font-size:22px;margin-bottom:4px}
+  .fcard .fs{color:#5b6a80;font-size:14px;margin-bottom:18px}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:#26384f;margin-bottom:6px}
+  .field input{width:100%;border:1px solid #E2E8F1;border-radius:10px;background:#FBFCFE;padding:12px 13px;font-family:inherit;font-size:15px;transition:.16s}
+  .field input:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(43,159,246,.15)}
+  .f2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .seg{display:flex;gap:7px;flex-wrap:wrap}
+  .seg .opt{font-size:12.5px;border:1px solid #E2E8F1;border-radius:9px;padding:8px 12px;cursor:pointer;color:#46566B;background:#FBFCFE;transition:.15s;user-select:none}
+  .seg .opt:hover{border-color:#bfe1fd}
+  .seg .opt.on{border-color:var(--blue);background:#E9F4FE;color:var(--blue-d);font-weight:600}
+  .fcard .btn-primary{width:100%;justify-content:center;margin-top:6px}
+  .fcard .alt{text-align:center;font-size:12.5px;color:#7486A0;margin-top:11px}
+  .fcard .alt a{color:var(--blue-d);font-weight:600}
+  .form-ok{display:none;text-align:center;padding:22px 6px}
+  .form-ok .ck{width:52px;height:52px;border-radius:50%;background:#E9F4FE;color:var(--blue-d);display:grid;place-items:center;margin:0 auto 14px}
+  .form-ok h3{font-size:21px;margin-bottom:6px}.form-ok p{color:#5b6a80;font-size:14px}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .card{background:var(--surface);border:1px solid var(--ln);border-radius:14px;padding:24px;transition:.22s}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .card .n{font-family:"IBM Plex Mono";font-size:12px;color:var(--blue)}
+  .card h3{font-size:19px;margin:10px 0 6px}
+  .card p{color:var(--txt2);font-size:14.5px;margin:0}
+
+  .concept{position:relative}
+  .concept::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(ellipse at 50% 0,#000,transparent 75%)}
+  .tl{position:relative;margin-top:50px;z-index:2}
+  .tl-line{position:absolute;left:6%;right:6%;top:13px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,#3a5f80,var(--blue),var(--blue-l));transform:scaleX(0);transform-origin:left;
+    transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .15s}
+  .tl.play .tl-line{transform:scaleX(1)}
+  .tl-nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tl-n{text-align:center;opacity:0;transform:translateY(14px);transition:.6s cubic-bezier(.2,.7,.2,1)}
+  .tl.play .tl-n{opacity:1;transform:none}
+  .tl-d{width:16px;height:16px;border-radius:50%;background:var(--blue);margin:5px auto 16px;
+    box-shadow:0 0 0 5px rgba(43,159,246,.18);position:relative;z-index:3}
+  .tl-n h4{font-size:20px;margin:0 0 4px}
+  .tl-n .sub{color:var(--muted);font-size:13px}
+  .tl-n .tag{display:inline-block;margin-top:11px;font-family:"IBM Plex Mono";font-size:11px;padding:4px 11px;
+    border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);color:#cfe3f6}
+  .axes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:38px}
+  .axis{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:12px;padding:13px 17px}
+  .axis .mono{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+  .axis .flow{margin-top:6px;font-weight:700;font-size:15px}
+  .axis .flow .ar{color:var(--blue)}
+
+  .stage{display:flex;align-items:center;gap:13px;margin:0 0 24px;flex-wrap:wrap}
+  .stag{font-family:"IBM Plex Mono";font-size:12px;color:#fff;border-radius:7px;padding:5px 12px}
+  .s-fix{background:#0B2A45}.s-hib{background:var(--blue-d)}.s-var{background:var(--blue)}
+  .stage .step{font-family:"IBM Plex Mono";color:var(--muted);font-size:13px}
+  .stage h2{font-size:clamp(24px,3.4vw,34px)}
+  .mini{background:var(--surface);border:1px solid var(--ln);border-radius:12px;padding:18px 20px;transition:.2s}
+  .mini:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#cfe1f5}
+  .mini h4{font-size:16px;margin:0 0 4px}
+  .mini span{color:var(--muted);font-size:13.5px}
+
+  .risk{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+  .risk h2{font-size:clamp(24px,3.4vw,38px);margin-bottom:14px}
+  .risk p{color:var(--txt2)}
+  .riskbar{position:relative;height:140px;border-radius:16px;overflow:hidden;display:flex;box-shadow:var(--shadow);
+    clip-path:inset(0 100% 0 0);transition:clip-path 1.2s cubic-bezier(.2,.7,.2,1)}
+  .riskbar.play{clip-path:inset(0 0 0 0)}
+  .riskbar::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);transform:translateX(-130%)}
+  .riskbar.play::after{animation:sheen 3.4s ease-in-out 1.2s infinite}
+  @keyframes sheen{0%{transform:translateX(-130%)}55%,100%{transform:translateX(130%)}}
+  .riskbar .sg>*{opacity:0;transform:translateY(10px);transition:.55s cubic-bezier(.2,.7,.2,1)}
+  .riskbar.play .sg.a>*{opacity:1;transform:none;transition-delay:.45s}
+  .riskbar.play .sg.b>*{opacity:1;transform:none;transition-delay:.72s}
+  .riskbar.play .sg.c>*{opacity:1;transform:none;transition-delay:1s}
+  .riskbar .sg{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#fff}
+  .riskbar .a{background:#0B2A45}.riskbar .b{background:linear-gradient(180deg,#1564a8,var(--blue-d))}.riskbar .c{background:linear-gradient(180deg,var(--blue-d),var(--blue))}
+  .riskbar .sg .mono{font-size:10px;letter-spacing:.07em;opacity:.85;text-transform:uppercase}
+  .riskbar .sg b{font-family:"Bricolage Grotesque";font-size:16px;margin-top:3px}
+
+  .pkgs{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .pkg{background:var(--surface);border:1px solid var(--ln);border-radius:16px;padding:28px;position:relative;transition:.22s}
+  .pkg:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .pkg.feat{border:1.5px solid var(--blue);box-shadow:0 18px 40px rgba(43,159,246,.15)}
+  .pkg .anchor{position:absolute;top:-12px;left:28px;background:var(--blue);color:#fff;font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.06em;padding:4px 11px;border-radius:6px;text-transform:uppercase}
+  .pkg .ph{font-family:"IBM Plex Mono";font-size:12px;color:var(--blue-d);margin-bottom:8px}
+  .pkg h3{font-size:24px;margin:0 0 8px}
+  .pkg p{color:var(--txt2);font-size:14.5px;margin:0 0 16px;min-height:40px}
+  .pkg .price{font-family:"IBM Plex Mono";font-size:13px;color:var(--muted);margin-bottom:16px}
+  .pkg .price b{color:var(--txt)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+  .stat{background:linear-gradient(150deg,#0F2236,#0c3457);border:1px solid var(--ln);border-radius:16px;padding:28px}
+  .stat .v{font-family:"Bricolage Grotesque";font-weight:800;font-size:44px;line-height:1;color:#fff}
+  .stat .k{color:#9fc0dd;font-size:14px;margin-top:8px}
+  .scap{font-family:"IBM Plex Mono";font-size:12px;color:var(--muted);text-align:center;margin-top:16px}
+
+  .ctab{text-align:center}
+  .ctab h2{font-size:clamp(28px,4.4vw,46px);max-width:16ch;margin:14px auto 24px}
+
+  footer{background:#070C15;color:#9fb3c7;padding:54px 0 30px}
+  .foot{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:34px}
+  footer .brand{color:#fff}
+  footer p{font-size:14px;color:#8094a8;margin:14px 0 0;max-width:36ch}
+  footer h5{font-family:"Bricolage Grotesque";color:#fff;font-size:13px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 13px}
+  footer ul{list-style:none;padding:0;margin:0}footer li{margin-bottom:9px;font-size:14px}
+  footer a:hover{color:var(--blue)}
+  .fbot{border-top:1px solid rgba(255,255,255,.08);margin-top:38px;padding-top:20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:"IBM Plex Mono";font-size:12px;color:#6c8095}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:920px){
+    .hero-grid,.risk{grid-template-columns:1fr;gap:34px}
+    .grid3,.stats{grid-template-columns:1fr 1fr}
+    .pkgs{grid-template-columns:1fr}
+  }
+  @media(max-width:600px){
+    body{font-size:16px}
+    .navlinks{display:none}.burger{display:block}.nav .btn-primary{display:none}
+    section{padding:62px 0}.hero{padding:118px 0 70px}
+    .grid3,.grid2,.stats,.tl-nodes,.axes,.f2{grid-template-columns:1fr}
+    .tl-line{display:none}.riskbar{height:auto;flex-direction:column}
+    .foot{grid-template-columns:1fr 1fr}
+    .glow{width:380px;height:380px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.tl-n{opacity:1;transform:none}.tl-line{transform:scaleX(1)}.riskbar{clip-path:none!important}.riskbar .sg>*{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true"><symbol id="logo" viewBox="0 0 447 532"><g transform="translate(0,532) scale(0.1,-0.1)"><path d="M1060 4930 l0 -270 -435 0 c-282 0 -435 -3 -435 -10 0 -5 15 -27 33 -47 18 -21 108 -130 198 -243 91 -113 309 -383 485 -600 176 -217 378 -467 449 -555 71 -88 177 -218 235 -290 59 -71 279 -344 490 -605 334 -413 670 -828 929 -1148 l75 -92 433 0 c237 0 434 4 437 9 3 4 -33 55 -80 112 -108 133 -116 143 -319 394 -249 309 -351 435 -534 659 -90 110 -243 299 -340 419 -97 120 -239 296 -316 392 -77 95 -220 271 -317 391 -97 121 -252 311 -344 424 -91 113 -244 302 -340 420 -95 118 -199 247 -230 285 l-57 70 1158 3 c637 1 1160 0 1163 -2 2 -3 -75 -103 -172 -223 -98 -120 -182 -225 -189 -233 -7 -8 -42 -51 -78 -95 -197 -239 -449 -558 -448 -568 0 -15 420 -530 434 -533 6 -2 29 20 51 49 23 29 169 210 326 402 156 193 332 411 392 485 131 164 153 190 247 305 175 211 399 495 399 504 0 5 -51 67 -112 138 -62 71 -151 173 -198 226 l-84 97 -1453 0 -1453 0 0 -270z M1456 2233 c-43 -54 -85 -107 -94 -118 -56 -68 -203 -249 -293 -360 -58 -71 -129 -159 -158 -195 -29 -36 -113 -139 -186 -230 -73 -91 -239 -295 -369 -455 -130 -159 -236 -293 -236 -297 0 -3 37 -49 83 -100 45 -52 129 -148 186 -214 57 -65 113 -127 124 -136 18 -17 102 -18 1463 -18 l1444 0 0 275 0 275 -1170 0 c-643 0 -1170 3 -1170 6 0 6 109 142 375 469 260 320 499 615 513 635 11 15 -1 35 -107 166 -266 331 -314 389 -321 392 -4 1 -42 -41 -84 -95z"/></g></symbol></svg>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#topo"><svg class="mk"><use href="#logo"/></svg>Provecta<span class="vgv">VGV</span></a>
+    <nav class="navlinks">
+      <a href="#metodo">Método</a><a href="#etapas">Etapas</a><a href="#pacotes">Pacotes</a><a href="#porque">Por quê</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a class="btn btn-primary" href="#topo">Solicitar proposta</a>
+      <button class="burger" id="burger" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mm"><a href="#metodo">Método</a><a href="#etapas">Etapas</a><a href="#pacotes">Pacotes</a><a href="#porque">Por quê</a><a href="#topo">Solicitar proposta</a></div>
+</header>
+
+<section class="hero" id="topo">
+  <div class="glow"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow anim" style="animation-delay:.05s">Marketing para construtoras</span>
+      <h1 class="anim" style="animation-delay:.12s;margin-top:18px">Performance para <span class="hl">cada etapa</span> da obra.</h1>
+      <p class="lead anim" style="animation-delay:.22s">Do pré-lançamento à entrega. Um parceiro só — pago conforme você vende.</p>
+      <div class="heromini anim" style="animation-delay:.32s">
+        <span>Corretor + gestor de tráfego</span>
+        <span>Salvador · BA</span>
+      </div>
+    </div>
+    <div class="anim" style="animation-delay:.3s">
+      <div class="fcard">
+        <div id="ffields">
+          <div class="ft">Solicitar proposta</div>
+          <div class="fs">Responda 5 campos e voltamos com uma proposta pra fase da sua obra.</div>
+          <div class="field"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
+          <div class="f2">
+            <div class="field"><label>WhatsApp</label><input type="tel" placeholder="(71) 9 0000-0000"></div>
+            <div class="field"><label>Construtora</label><input type="text" placeholder="Empresa"></div>
+          </div>
+          <div class="field"><label>Etapa do empreendimento</label>
+            <div class="seg"><span class="opt on">Pré-lançamento</span><span class="opt">Lançamento</span><span class="opt">Entrega</span></div>
+          </div>
+          <div class="field"><label>VGV estimado</label>
+            <div class="seg"><span class="opt">até 20mi</span><span class="opt on">20–50mi</span><span class="opt">50–100mi</span><span class="opt">100mi+</span></div>
+          </div>
+          <button class="btn btn-primary" id="submitBtn">Quero uma proposta <span class="ar">→</span></button>
+          <div class="alt">ou <a href="#">falar direto no WhatsApp</a></div>
+        </div>
+        <div class="form-ok" id="formOk">
+          <div class="ck"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></div>
+          <h3>Recebido!</h3><p>Vamos analisar a etapa e o VGV e voltar com uma proposta sob medida.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="dor">
+  <div class="wrap">
+    <div class="sechead reveal"><span class="eyebrow">O problema</span><h2>Lançar é fácil. Vender até a entrega, não.</h2></div>
+    <div class="grid3">
+      <div class="card reveal"><div class="n">/01</div><h3>Estoque que encalha</h3><p>Unidade que sobra vira custo de caixa.</p></div>
+      <div class="card reveal" style="transition-delay:.1s"><div class="n">/02</div><h3>Dia D não zera</h3><p>Quase nenhum lançamento vende 100% no evento.</p></div>
+      <div class="card reveal" style="transition-delay:.2s"><div class="n">/03</div><h3>Marketing solto</h3><p>Tráfego, criação e comercial sem conversar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="concept" id="metodo">
+  <div class="wrap">
+    <div class="sechead reveal"><span class="eyebrow">O método</span><h2>Um produto para cada etapa da obra.</h2>
+      <p class="lead">O foco vai de branding a performance — e a remuneração, de fixo a variável.</p></div>
+    <div class="tl reveal" id="tl">
+      <div class="tl-line"></div>
+      <div class="tl-nodes">
+        <div class="tl-n" style="transition-delay:.2s"><div class="tl-d"></div><h4>Pré-Lançamento</h4><div class="sub">Branding e material visual</div><span class="tag">fixo</span></div>
+        <div class="tl-n" style="transition-delay:.45s"><div class="tl-d"></div><h4>Lançamento</h4><div class="sub">Performance + branding</div><span class="tag">híbrido · fixo + %VGV</span></div>
+        <div class="tl-n" style="transition-delay:.7s"><div class="tl-d"></div><h4>Entrega</h4><div class="sub">Performance pura</div><span class="tag">variável · %VGV</span></div>
+      </div>
+      <div class="axes">
+        <div class="axis"><div class="mono">Foco</div><div class="flow">Branding <span class="ar">→</span> Performance</div></div>
+        <div class="axis"><div class="mono">Remuneração</div><div class="flow">Fixo <span class="ar">→</span> Híbrido <span class="ar">→</span> Variável</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="etapas">
+  <div class="wrap">
+    <div class="stage reveal"><span class="stag s-fix">FIXO</span><span class="step">Etapa 01</span><h2>Pré-Lançamento</h2></div>
+    <div class="grid3" style="margin-bottom:48px">
+      <div class="mini reveal"><h4>Identidade do empreendimento</h4><span>Naming, logo, paleta e conceito.</span></div>
+      <div class="mini reveal" style="transition-delay:.05s"><h4>Book de vendas</h4><span>Plantas, perspectivas e ficha técnica.</span></div>
+      <div class="mini reveal" style="transition-delay:.1s"><h4>Cards e peças</h4><span>Teaser, "em breve", save the date.</span></div>
+      <div class="mini reveal"><h4>Produção 3D</h4><span>Renders e perspectivas.</span></div>
+      <div class="mini reveal" style="transition-delay:.05s"><h4>Evento de lançamento</h4><span>Conceito, convite e ambientação.</span></div>
+      <div class="mini reveal" style="transition-delay:.1s"><h4>Tabela de vendas</h4><span>Condições diagramadas por canal.</span></div>
+    </div>
+
+    <div class="stage reveal"><span class="stag s-hib">HÍBRIDO</span><span class="step">Etapa 02</span><h2>Lançamento</h2></div>
+    <div class="grid3" style="margin-bottom:48px">
+      <div class="mini reveal"><h4>Tráfego pago</h4><span>Leads em Meta e Google.</span></div>
+      <div class="mini reveal" style="transition-delay:.05s"><h4>Social media</h4><span>Conteúdo durante a venda.</span></div>
+      <div class="mini reveal" style="transition-delay:.1s"><h4>Comercial / CRM</h4><span>Qualificação e atendimento.</span></div>
+      <div class="mini reveal"><h4>Marketing offline</h4><span>Outdoor, panfleto, estande.</span></div>
+      <div class="mini reveal" style="transition-delay:.05s"><h4>Landing page</h4><span>Conversão integrada ao CRM.</span></div>
+    </div>
+
+    <div class="stage reveal"><span class="stag s-var">VARIÁVEL</span><span class="step">Etapa 03</span><h2>Entrega e Remanescentes</h2></div>
+    <div class="grid2">
+      <div class="mini reveal"><h4>Performance de remanescentes</h4><span>Tráfego e comercial focados em zerar o estoque.</span></div>
+      <div class="mini reveal" style="transition-delay:.08s"><h4>Reposicionamento de oferta</h4><span>Campanha de "últimas unidades".</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="risco">
+  <div class="wrap risk">
+    <div class="reveal">
+      <span class="eyebrow">Alinhado ao risco</span>
+      <h2 style="margin-top:14px">Cedo, por entrega. Perto da venda, por resultado.</h2>
+      <p>O variável é um percentual do VGV vendido. O fixo cobre mídia e operação — e protege quando a venda trava por preço ou produto.</p>
+    </div>
+    <div class="reveal" style="transition-delay:.1s">
+      <div class="riskbar" id="riskbar">
+        <div class="sg a"><span class="mono">pré-lançamento</span><b>Fixo</b></div>
+        <div class="sg b"><span class="mono">lançamento</span><b>Híbrido</b></div>
+        <div class="sg c"><span class="mono">remanescentes</span><b>Variável</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="pacotes">
+  <div class="wrap">
+    <div class="sechead reveal"><span class="eyebrow">Pacotes</span><h2>Cubra a obra inteira — ou só o trecho que precisa.</h2></div>
+    <div class="pkgs">
+      <div class="pkg feat reveal"><span class="anchor">Âncora · ponta a ponta</span><div class="ph">Pré → Lançamento → Entrega</div><h3>Obra Completa</h3><p>Um parceiro do projeto inteiro. Fixo → híbrido → variável no mesmo contrato.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-primary" href="#topo">Solicitar proposta <span class="ar">→</span></a></div>
+      <div class="pkg reveal" style="transition-delay:.08s"><div class="ph">Pré → Lançamento</div><h3>Lançar e Vender</h3><p>Do branding até a venda. Pra quem tem comercial próprio.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
+      <div class="pkg reveal" style="transition-delay:.04s"><div class="ph">Lançamento → Entrega</div><h3>Performance</h3><p>Você tem a criação pronta; a gente entra na venda.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
+      <div class="pkg reveal" style="transition-delay:.12s"><div class="ph">Somente Pré</div><h3>Branding de Lançamento</h3><p>Identidade, book, 3D e evento. Você toca a performance.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="porque">
+  <div class="wrap">
+    <div class="sechead reveal"><span class="eyebrow">Por que a Provecta</span><h2>Corretor que domina tráfego — não agência que aprendeu imóvel.</h2></div>
+    <div class="grid3">
+      <div class="card reveal"><h3>Corretor + tráfego</h3><p>Quem estrutura a campanha entende a venda do outro lado.</p></div>
+      <div class="card reveal" style="transition-delay:.08s"><h3>Método validado</h3><p>A mesma máquina que roda no automotivo, no imobiliário.</p></div>
+      <div class="card reveal" style="transition-delay:.16s"><h3>Estrutura de agência</h3><p>Criação, tráfego, social e comercial sob o mesmo teto.</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat reveal"><div class="v" data-target="5.7" data-prefix="R$ " data-suffix=" bi">R$ 0 bi</div><div class="k">VGV de Salvador · 12 meses</div></div>
+      <div class="stat reveal" style="transition-delay:.08s"><div class="v" data-target="127.7" data-prefix="+" data-suffix="%">+0%</div><div class="k">Crescimento no período</div></div>
+      <div class="stat reveal" style="transition-delay:.16s"><div class="v" data-target="15.1" data-prefix="+" data-suffix="%">+0%</div><div class="k">Valorização do alto padrão</div></div>
+    </div>
+    <div class="scap">Dados de mercado · Salvador / BA</div>
+  </div>
+</section>
+
+<section class="ctab">
+  <div class="wrap reveal">
+    <span class="eyebrow" style="justify-content:center">Próximo passo</span>
+    <h2>Vamos vender seu próximo lançamento?</h2>
+    <div style="display:flex;gap:13px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-primary" href="#topo">Solicitar proposta <span class="ar">→</span></a>
+      <a class="btn btn-ghost" href="#">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#topo"><svg class="mk"><use href="#logo"/></svg>Provecta<span class="vgv">VGV</span></a>
+        <p>A frente imobiliária da Provecta, focada no mercado imobiliário. Do pré-lançamento à entrega.</p>
+      </div>
+      <div><h5>Navegação</h5><ul><li><a href="#metodo">Método</a></li><li><a href="#etapas">Etapas</a></li><li><a href="#pacotes">Pacotes</a></li><li><a href="#porque">Por quê</a></li></ul></div>
+      <div><h5>Contato</h5><ul><li><a href="#topo">Solicitar proposta</a></li><li>WhatsApp</li><li>Mundo Plaza Empresarial · salas 2305 e 2306</li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 Provecta VGV</span><span>do pré-lançamento à entrega</span></div>
+  </div>
+</footer>
+
+<script>
+  const hdr=document.getElementById('hdr');
+  addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>8),{passive:true});
+  const mm=document.getElementById('mm');
+  document.getElementById('burger').onclick=()=>mm.classList.toggle('open');
+  mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('open'));
+
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const tlEl=document.getElementById('tl');
+  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){tlEl.classList.add('play');o.disconnect();}}),{threshold:.3}).observe(tlEl);
+
+  const rb=document.getElementById('riskbar');
+  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){rb.classList.add('play');o.disconnect();}}),{threshold:.35}).observe(rb);
+
+  const fmt=n=>n.toFixed(1).replace('.',',');
+  const cio=new IntersectionObserver((es)=>es.forEach(e=>{
+    if(!e.isIntersecting)return;const el=e.target;cio.unobserve(el);
+    const t=+el.dataset.target,p=el.dataset.prefix||'',s=el.dataset.suffix||'';let st=null;
+    const step=(ts)=>{if(!st)st=ts;const k=Math.min((ts-st)/1100,1);el.textContent=p+fmt(t*(1-Math.pow(1-k,3)))+s;if(k<1)requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+  }),{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>cio.observe(el));
+
+  document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    g.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');}));
+
+  document.getElementById('submitBtn').onclick=()=>{
+    document.getElementById('ffields').style.display='none';
+    document.getElementById('formOk').style.display='block';};
+</script>
+</body>
+</html>
