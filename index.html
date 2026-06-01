@@ -17,7 +17,7 @@
     --txt:#0E1825; --txt2:#46566B; --muted:#7486A0; --ln:#E4EAF2; --tint:#E9F4FE;
     --shadow:0 14px 36px rgba(11,42,69,.10);}
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-snap-type:y proximity}
   body{margin:0;background:#0B121E;color:#EAF1F9;font-family:"Hanken Grotesk",system-ui,sans-serif;
     font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   h1,h2,h3,h4{font-family:"Bricolage Grotesque",sans-serif;line-height:1.03;letter-spacing:-.02em;margin:0;font-weight:700}
@@ -189,6 +189,42 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
 
+  /* ticker / marquee */
+  .ticker{background:var(--blue);overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18)}
+  .ticker-track{display:inline-flex;align-items:center;padding:15px 0;animation:ticker 38s linear infinite;will-change:transform}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .ticker-track span{font-family:"IBM Plex Mono";font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:0 22px}
+  .ticker-track i{color:rgba(255,255,255,.55);font-style:normal;font-size:11px}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* fullscreen scroll slideshow */
+  .slideshow{position:relative;background:#0B121E}
+  .ss-bg{position:sticky;top:0;height:100vh;overflow:hidden;z-index:0}
+  .ss-img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+  .ss-img.on{opacity:1}
+  .ss-img.i0{background:radial-gradient(120% 90% at 22% 25%,rgba(43,159,246,.34),transparent 60%),linear-gradient(155deg,#0a1c2e,#06101c)}
+  .ss-img.i1{background:radial-gradient(120% 100% at 80% 35%,rgba(43,159,246,.5),transparent 55%),linear-gradient(155deg,#0c2c4a,#081726)}
+  .ss-img.i2{background:radial-gradient(130% 110% at 50% 92%,rgba(107,187,249,.55),transparent 55%),linear-gradient(155deg,#0f3b63,#0a2034)}
+  .ss-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,12,21,.45),rgba(7,12,21,.12) 42%,rgba(7,12,21,.8));pointer-events:none}
+  .ss-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 82%)}
+  .ss-slides{position:relative;margin-top:-100vh;z-index:1}
+  .slide{height:100vh;display:flex;align-items:flex-end;padding-bottom:13vh;scroll-snap-align:start}
+  .ss-content{color:#fff}
+  .ss-idx{font-family:"IBM Plex Mono";font-size:13px;color:var(--blue-l);letter-spacing:.22em}
+  .ss-content h2{font-size:clamp(46px,8.5vw,104px);font-weight:800;letter-spacing:-.03em;margin:10px 0 8px;color:#fff}
+  .ss-sub{color:#cfe0f1;font-size:clamp(17px,2.2vw,22px)}
+  .ss-chip{display:inline-block;margin-top:18px;font-family:"IBM Plex Mono";font-size:12px;letter-spacing:.06em;padding:7px 14px;border-radius:20px;background:rgba(43,159,246,.18);border:1px solid rgba(107,187,249,.4);color:#cfe3f6}
+  .ss-lead{color:#aebfd0;max-width:46ch;margin:24px 0 0;font-size:16px}
+  .ss-axes{display:flex;gap:30px;flex-wrap:wrap;margin-top:16px;color:#dceaf6;font-size:15px;font-weight:600}
+  .ss-axes i{display:block;font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;margin-bottom:4px}
+  .ss-ui{position:sticky;top:0;height:100vh;margin-top:-100vh;z-index:2;pointer-events:none}
+  .ss-intro{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100%;padding-top:100px}
+  .ss-intro p{font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(19px,2.6vw,28px);color:#fff;margin:10px 0 0;max-width:16ch}
+  .ss-counter{position:absolute;right:30px;bottom:28px;font-family:"IBM Plex Mono";color:#fff;display:flex;align-items:baseline;gap:2px}
+  .ss-counter b{font-family:"Bricolage Grotesque";font-size:34px;font-weight:800}
+  .ss-counter span{opacity:.55;font-size:15px}
+  @media(max-width:600px){.ss-intro{padding-top:82px}.ss-counter{right:18px;bottom:18px}.slide{padding-bottom:16vh}}
+
   @media(max-width:920px){
     .hero-grid,.risk{grid-template-columns:1fr;gap:34px}
     .grid3,.stats{grid-template-columns:1fr 1fr}
@@ -264,6 +300,13 @@
   </div>
 </section>
 
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Pré-lançamento</span><i>◆</i><span>Lançamento</span><i>◆</i><span>Entrega</span><i>◆</i><span>Tráfego pago</span><i>◆</i><span>Book de vendas</span><i>◆</i><span>Social media</span><i>◆</i><span>CRM</span><i>◆</i><span>Produção 3D</span><i>◆</i><span>Landing page</span><i>◆</i><span>Evento</span><i>◆</i><span>Remanescentes</span><i>◆</i><span>Reposicionamento</span><i>◆</i>
+    <span>Pré-lançamento</span><i>◆</i><span>Lançamento</span><i>◆</i><span>Entrega</span><i>◆</i><span>Tráfego pago</span><i>◆</i><span>Book de vendas</span><i>◆</i><span>Social media</span><i>◆</i><span>CRM</span><i>◆</i><span>Produção 3D</span><i>◆</i><span>Landing page</span><i>◆</i><span>Evento</span><i>◆</i><span>Remanescentes</span><i>◆</i><span>Reposicionamento</span><i>◆</i>
+  </div>
+</div>
+
 <section class="light" id="dor">
   <div class="wrap">
     <div class="sechead reveal"><span class="eyebrow">O problema</span><h2>Lançar é fácil. Vender até a entrega, não.</h2></div>
@@ -275,28 +318,54 @@
   </div>
 </section>
 
-<section class="concept" id="metodo">
-  <div class="wrap">
-    <div class="sechead reveal"><span class="eyebrow">O método</span><h2>Um produto para cada etapa da obra.</h2>
-      <p class="lead">O foco vai de branding a performance — e a remuneração, de fixo a variável.</p></div>
-    <div class="tl reveal" id="tl">
-      <div class="tl-line"></div>
-      <div class="tl-nodes">
-        <div class="tl-n" style="transition-delay:.2s"><div class="tl-d"></div><h4>Pré-Lançamento</h4><div class="sub">Branding e material visual</div><span class="tag">fixo</span></div>
-        <div class="tl-n" style="transition-delay:.45s"><div class="tl-d"></div><h4>Lançamento</h4><div class="sub">Performance + branding</div><span class="tag">híbrido · fixo + %VGV</span></div>
-        <div class="tl-n" style="transition-delay:.7s"><div class="tl-d"></div><h4>Entrega</h4><div class="sub">Performance pura</div><span class="tag">variável · %VGV</span></div>
-      </div>
-      <div class="axes">
-        <div class="axis"><div class="mono">Foco</div><div class="flow">Branding <span class="ar">→</span> Performance</div></div>
-        <div class="axis"><div class="mono">Remuneração</div><div class="flow">Fixo <span class="ar">→</span> Híbrido <span class="ar">→</span> Variável</div></div>
+<section class="slideshow" id="metodo">
+  <div class="ss-bg">
+    <div class="ss-img i0 on"></div>
+    <div class="ss-img i1"></div>
+    <div class="ss-img i2"></div>
+    <div class="ss-scrim"></div>
+    <div class="ss-grid"></div>
+  </div>
+  <div class="ss-slides">
+    <div class="slide" data-i="0">
+      <div class="wrap ss-content">
+        <div class="ss-idx">01 / 03</div>
+        <h2>Pré-Lançamento</h2>
+        <div class="ss-sub">Branding e material visual</div>
+        <span class="ss-chip">Marca e material</span>
       </div>
     </div>
+    <div class="slide" data-i="1">
+      <div class="wrap ss-content">
+        <div class="ss-idx">02 / 03</div>
+        <h2>Lançamento</h2>
+        <div class="ss-sub">Performance + branding</div>
+        <span class="ss-chip">Geração de vendas</span>
+      </div>
+    </div>
+    <div class="slide" data-i="2">
+      <div class="wrap ss-content">
+        <div class="ss-idx">03 / 03</div>
+        <h2>Entrega</h2>
+        <div class="ss-sub">Performance pura</div>
+        <span class="ss-chip">Estoque zerado</span>
+        <p class="ss-lead">O foco do trabalho vai de branding a performance conforme a obra avança.</p>
+        <div class="ss-axes">
+          <span><i>Foco</i>Branding → Performance</span>
+          <span><i>Objetivo</i>Posicionar → Vender → Zerar estoque</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ss-ui">
+    <div class="wrap ss-intro"><span class="eyebrow">O método</span><p>Um produto para cada etapa da obra.</p></div>
+    <div class="ss-counter"><b id="ssNum">01</b><span>/03</span></div>
   </div>
 </section>
 
 <section class="light" id="etapas">
   <div class="wrap">
-    <div class="stage reveal"><span class="stag s-fix">FIXO</span><span class="step">Etapa 01</span><h2>Pré-Lançamento</h2></div>
+    <div class="stage reveal"><span class="stag s-fix">CRIAÇÃO</span><span class="step">Etapa 01</span><h2>Pré-Lançamento</h2></div>
     <div class="grid3" style="margin-bottom:48px">
       <div class="mini reveal"><h4>Identidade do empreendimento</h4><span>Naming, logo, paleta e conceito.</span></div>
       <div class="mini reveal" style="transition-delay:.05s"><h4>Book de vendas</h4><span>Plantas, perspectivas e ficha técnica.</span></div>
@@ -306,7 +375,7 @@
       <div class="mini reveal" style="transition-delay:.1s"><h4>Tabela de vendas</h4><span>Condições diagramadas por canal.</span></div>
     </div>
 
-    <div class="stage reveal"><span class="stag s-hib">HÍBRIDO</span><span class="step">Etapa 02</span><h2>Lançamento</h2></div>
+    <div class="stage reveal"><span class="stag s-hib">VENDAS</span><span class="step">Etapa 02</span><h2>Lançamento</h2></div>
     <div class="grid3" style="margin-bottom:48px">
       <div class="mini reveal"><h4>Tráfego pago</h4><span>Leads em Meta e Google.</span></div>
       <div class="mini reveal" style="transition-delay:.05s"><h4>Social media</h4><span>Conteúdo durante a venda.</span></div>
@@ -315,7 +384,7 @@
       <div class="mini reveal" style="transition-delay:.05s"><h4>Landing page</h4><span>Conversão integrada ao CRM.</span></div>
     </div>
 
-    <div class="stage reveal"><span class="stag s-var">VARIÁVEL</span><span class="step">Etapa 03</span><h2>Entrega e Remanescentes</h2></div>
+    <div class="stage reveal"><span class="stag s-var">RESULTADO</span><span class="step">Etapa 03</span><h2>Entrega e Remanescentes</h2></div>
     <div class="grid2">
       <div class="mini reveal"><h4>Performance de remanescentes</h4><span>Tráfego e comercial focados em zerar o estoque.</span></div>
       <div class="mini reveal" style="transition-delay:.08s"><h4>Reposicionamento de oferta</h4><span>Campanha de "últimas unidades".</span></div>
@@ -323,20 +392,11 @@
   </div>
 </section>
 
-<section id="risco">
-  <div class="wrap risk">
-    <div class="reveal">
-      <span class="eyebrow">Alinhado ao risco</span>
-      <h2 style="margin-top:14px">Cedo, por entrega. Perto da venda, por resultado.</h2>
-      <p>O variável é um percentual do VGV vendido. O fixo cobre mídia e operação — e protege quando a venda trava por preço ou produto.</p>
-    </div>
-    <div class="reveal" style="transition-delay:.1s">
-      <div class="riskbar" id="riskbar">
-        <div class="sg a"><span class="mono">pré-lançamento</span><b>Fixo</b></div>
-        <div class="sg b"><span class="mono">lançamento</span><b>Híbrido</b></div>
-        <div class="sg c"><span class="mono">remanescentes</span><b>Variável</b></div>
-      </div>
-    </div>
+<section id="parceiro">
+  <div class="wrap" style="text-align:center;max-width:760px;margin:0 auto">
+    <span class="eyebrow reveal" style="justify-content:center">Um só parceiro</span>
+    <h2 class="reveal" style="font-size:clamp(28px,4.4vw,46px);margin:14px 0 16px">Da primeira planta à última unidade vendida.</h2>
+    <p class="lead reveal" style="margin:0 auto;text-align:center">Criação, tráfego e comercial na mesma mesa, acompanhando cada fase da obra — sem terceirizar o que liga o lead à venda.</p>
   </div>
 </section>
 
@@ -344,7 +404,7 @@
   <div class="wrap">
     <div class="sechead reveal"><span class="eyebrow">Pacotes</span><h2>Cubra a obra inteira — ou só o trecho que precisa.</h2></div>
     <div class="pkgs">
-      <div class="pkg feat reveal"><span class="anchor">Âncora · ponta a ponta</span><div class="ph">Pré → Lançamento → Entrega</div><h3>Obra Completa</h3><p>Um parceiro do projeto inteiro. Fixo → híbrido → variável no mesmo contrato.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-primary" href="#topo">Solicitar proposta <span class="ar">→</span></a></div>
+      <div class="pkg feat reveal"><span class="anchor">Âncora · ponta a ponta</span><div class="ph">Pré → Lançamento → Entrega</div><h3>Obra Completa</h3><p>Um parceiro do projeto inteiro, do pré-lançamento à entrega das unidades.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-primary" href="#topo">Solicitar proposta <span class="ar">→</span></a></div>
       <div class="pkg reveal" style="transition-delay:.08s"><div class="ph">Pré → Lançamento</div><h3>Lançar e Vender</h3><p>Do branding até a venda. Pra quem tem comercial próprio.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
       <div class="pkg reveal" style="transition-delay:.04s"><div class="ph">Lançamento → Entrega</div><h3>Performance</h3><p>Você tem a criação pronta; a gente entra na venda.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
       <div class="pkg reveal" style="transition-delay:.12s"><div class="ph">Somente Pré</div><h3>Branding de Lançamento</h3><p>Identidade, book, 3D e evento. Você toca a performance.</p><div class="price">Investimento <b>sob proposta</b></div><a class="btn btn-ghost" href="#topo">Solicitar proposta</a></div>
@@ -404,11 +464,11 @@
   const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  const tlEl=document.getElementById('tl');
-  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){tlEl.classList.add('play');o.disconnect();}}),{threshold:.3}).observe(tlEl);
-
-  const rb=document.getElementById('riskbar');
-  new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){rb.classList.add('play');o.disconnect();}}),{threshold:.35}).observe(rb);
+  const imgs=[...document.querySelectorAll('.ss-img')];
+  const ssNum=document.getElementById('ssNum');
+  const setSlide=i=>{imgs.forEach((im,k)=>im.classList.toggle('on',k===i));if(ssNum)ssNum.textContent='0'+(i+1);};
+  const sObs=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>=.5)setSlide(+e.target.dataset.i);}),{threshold:[.5]});
+  document.querySelectorAll('.slide').forEach(s=>sObs.observe(s));
 
   const fmt=n=>n.toFixed(1).replace('.',',');
   const cio=new IntersectionObserver((es)=>es.forEach(e=>{
