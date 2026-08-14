@@ -306,19 +306,19 @@
         <div id="ffields">
           <div class="ft">Solicitar proposta</div>
           <div class="fs">Responda 5 campos e voltamos com uma proposta pra fase da sua obra.</div>
-          <div class="field"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
+          <div class="field"><label>Nome</label><input type="text" id="fNome" placeholder="Seu nome"></div>
           <div class="f2">
-            <div class="field"><label>WhatsApp</label><input type="tel" placeholder="(71) 9 0000-0000"></div>
-            <div class="field"><label>Construtora</label><input type="text" placeholder="Empresa"></div>
+            <div class="field"><label>WhatsApp</label><input type="tel" id="fZap" placeholder="(71) 9 0000-0000"></div>
+            <div class="field"><label>Construtora</label><input type="text" id="fEmp" placeholder="Empresa"></div>
           </div>
           <div class="field"><label>Etapa do empreendimento</label>
-            <div class="seg"><span class="opt on">Pré-lançamento</span><span class="opt">Lançamento</span><span class="opt">Entrega</span></div>
+            <div class="seg" id="fEtapa"><span class="opt on">Pré-lançamento</span><span class="opt">Lançamento</span><span class="opt">Entrega</span></div>
           </div>
           <div class="field"><label>VGV estimado</label>
-            <div class="seg"><span class="opt">até 20mi</span><span class="opt on">20–50mi</span><span class="opt">50–100mi</span><span class="opt">100mi+</span></div>
+            <div class="seg" id="fVgv"><span class="opt">até 20mi</span><span class="opt on">20–50mi</span><span class="opt">50–100mi</span><span class="opt">100mi+</span></div>
           </div>
           <button class="btn btn-primary" id="submitBtn">Quero uma proposta <span class="ar">→</span></button>
-          <div class="alt">ou <a href="#">falar direto no WhatsApp</a></div>
+          <div class="alt">ou <a href="https://wa.me/557193068515?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Provecta%20VGV%20e%20quero%20falar%20sobre%20um%20empreendimento." target="_blank" rel="noopener">falar direto no WhatsApp</a></div>
         </div>
         <div class="form-ok" id="formOk">
           <div class="ck"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg></div>
@@ -454,7 +454,7 @@
     <h2>Vamos vender seu próximo lançamento?</h2>
     <div style="display:flex;gap:13px;justify-content:center;flex-wrap:wrap">
       <a class="btn btn-primary" href="#topo">Solicitar proposta <span class="ar">→</span></a>
-      <a class="btn btn-ghost" href="#">WhatsApp</a>
+      <a class="btn btn-ghost" href="https://wa.me/557193068515?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Provecta%20VGV%20e%20quero%20falar%20sobre%20um%20empreendimento." target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
 </section>
@@ -467,7 +467,7 @@
         <p>A frente imobiliária da Provecta, focada no mercado imobiliário. Do pré-lançamento à entrega.</p>
       </div>
       <div><h5>Navegação</h5><ul><li><a href="#metodo">Método</a></li><li><a href="#etapas">Etapas</a></li><li><a href="#pacotes">Pacotes</a></li><li><a href="#porque">Por quê</a></li></ul></div>
-      <div><h5>Contato</h5><ul><li><a href="#topo">Solicitar proposta</a></li><li>WhatsApp</li><li>Mundo Plaza Empresarial · salas 2305 e 2306</li></ul></div>
+      <div><h5>Contato</h5><ul><li><a href="#topo">Solicitar proposta</a></li><li><a href="https://wa.me/557193068515" target="_blank" rel="noopener">WhatsApp (71) 9306-8515</a></li><li><a href="mailto:vgv@provectamkt.com">vgv@provectamkt.com</a></li><li>Mundo Plaza Empresarial · salas 2305 e 2306</li></ul></div>
     </div>
     <div class="fbot"><span>© 2026 Provecta VGV</span><span>do pré-lançamento à entrega</span></div>
   </div>
@@ -526,9 +526,46 @@
   document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     g.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');}));
 
-  document.getElementById('submitBtn').onclick=()=>{
-    document.getElementById('ffields').style.display='none';
-    document.getElementById('formOk').style.display='block';};
+  // ⬇️ COLE AQUI a URL do webhook do Make (entre as aspas)
+  const MAKE_WEBHOOK='';
+
+  document.getElementById('submitBtn').onclick=async()=>{
+    const btn=document.getElementById('submitBtn');
+    const val=id=>(document.getElementById(id).value||'').trim();
+    const pick=id=>{const el=document.querySelector('#'+id+' .opt.on');return el?el.textContent.trim():'';};
+    const nome=val('fNome'),zap=val('fZap'),emp=val('fEmp');
+    let falhou=false;
+    [['fNome',nome],['fZap',zap]].forEach(([id,v])=>{const el=document.getElementById(id);
+      if(!v){el.style.borderColor='#e0564f';el.style.boxShadow='0 0 0 3px rgba(224,86,79,.15)';falhou=true;}
+      else{el.style.borderColor='';el.style.boxShadow='';}});
+    if(falhou){document.getElementById('fNome').focus();return;}
+
+    const qs=new URLSearchParams(location.search);
+    const dados={
+      nome:nome, whatsapp:zap, construtora:emp||'',
+      etapa:pick('fEtapa'), vgv:pick('fVgv'),
+      utm_source:qs.get('utm_source')||'', utm_medium:qs.get('utm_medium')||'',
+      utm_campaign:qs.get('utm_campaign')||'', utm_content:qs.get('utm_content')||'',
+      pagina:location.href, enviado_em:new Date().toISOString()
+    };
+
+    const ok=()=>{document.getElementById('ffields').style.display='none';
+                  document.getElementById('formOk').style.display='block';};
+
+    if(!MAKE_WEBHOOK){ // fallback enquanto o webhook não estiver configurado
+      const corpo=Object.entries(dados).map(([k,v])=>k+': '+v).join('\n');
+      window.location.href='mailto:vgv@provectamkt.com?subject='+encodeURIComponent('Nova solicitação de proposta — '+(emp||nome))+'&body='+encodeURIComponent(corpo);
+      ok();return;
+    }
+
+    const txt=btn.innerHTML; btn.innerHTML='Enviando…'; btn.style.opacity='.7'; btn.disabled=true;
+    try{
+      await fetch(MAKE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(dados)});
+      ok();
+    }catch(e){
+      btn.innerHTML=txt; btn.style.opacity=''; btn.disabled=false;
+      alert('Não consegui enviar agora. Chame no WhatsApp (71) 9306-8515 que a gente resolve rapidinho.');
+    }};
 </script>
 </body>
 </html>
