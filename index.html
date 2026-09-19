@@ -526,8 +526,11 @@
   document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     g.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');}));
 
-  // ⬇️ COLE AQUI a URL do webhook do Make (entre as aspas)
+  // Webhook do Make. O cenário PRECISA estar ligado (ON) — se estiver desligado,
+  // o Make responde 200 e engole o lead na fila sem rodar o e-mail.
   const MAKE_WEBHOOK='https://hook.us2.make.com/pybg5rima742nx5l2brpvj7cfe9oa18g';
+  const WHATS='557193068515';
+  const DEBUG=new URLSearchParams(location.search).has('debug');
 
   document.getElementById('submitBtn').onclick=async()=>{
     const btn=document.getElementById('submitBtn');
@@ -549,22 +552,48 @@
       pagina:location.href, enviado_em:new Date().toISOString()
     };
 
+    // Backup local: se o webhook cair, o lead ainda fica recuperável no navegador.
+    try{const b=JSON.parse(localStorage.getItem('provecta_leads')||'[]');
+        b.push(dados);localStorage.setItem('provecta_leads',JSON.stringify(b.slice(-50)));}catch(e){}
+
     const ok=()=>{document.getElementById('ffields').style.display='none';
                   document.getElementById('formOk').style.display='block';};
 
-    if(!MAKE_WEBHOOK){ // fallback enquanto o webhook não estiver configurado
-      const corpo=Object.entries(dados).map(([k,v])=>k+': '+v).join('\n');
-      window.location.href='mailto:vgv@provectamkt.com?subject='+encodeURIComponent('Nova solicitação de proposta — '+(emp||nome))+'&body='+encodeURIComponent(corpo);
-      ok();return;
-    }
+    const erro=(motivo)=>{
+      btn.innerHTML=txt; btn.style.opacity=''; btn.disabled=false;
+      const msg='Olá! Tentei enviar pelo site e deu erro. Nome: '+nome+
+                ' | Construtora: '+(emp||'-')+' | Etapa: '+dados.etapa+' | VGV: '+dados.vgv;
+      let box=document.getElementById('fErr');
+      if(!box){box=document.createElement('div');box.id='fErr';
+        box.style.cssText='margin-top:12px;padding:12px 14px;border-radius:10px;'+
+          'background:rgba(224,86,79,.12);border:1px solid rgba(224,86,79,.4);'+
+          'font-size:14px;line-height:1.5';
+        document.getElementById('ffields').appendChild(box);}
+      box.innerHTML='Não consegui enviar agora. '+
+        '<a href="https://wa.me/'+WHATS+'?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener"'+
+        ' style="text-decoration:underline;font-weight:600">Fale no WhatsApp</a> que a gente resolve na hora.'+
+        (DEBUG?'<br><code style="font-size:12px;opacity:.8">debug: '+motivo+'</code>':'');
+      if(DEBUG)console.error('[form] falha:',motivo,dados);
+    };
 
     const txt=btn.innerHTML; btn.innerHTML='Enviando…'; btn.style.opacity='.7'; btn.disabled=true;
+
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),12000);
     try{
-      await fetch(MAKE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(dados)});
+      const res=await fetch(MAKE_WEBHOOK,{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(dados), signal:ctrl.signal, keepalive:true
+      });
+      clearTimeout(t);
+      const corpo=await res.text().catch(()=>'');
+      if(DEBUG)console.log('[form] status',res.status,'corpo:',corpo);
+      // O Make responde 200 + "Accepted" quando aceita. Qualquer outra coisa é falha.
+      if(!res.ok){ erro('HTTP '+res.status+' — '+corpo.slice(0,180)); return; }
       ok();
     }catch(e){
-      btn.innerHTML=txt; btn.style.opacity=''; btn.disabled=false;
-      alert('Não consegui enviar agora. Chame no WhatsApp (71) 9306-8515 que a gente resolve rapidinho.');
+      clearTimeout(t);
+      erro(e.name==='AbortError'?'timeout de 12s':(e.message||'falha de rede/CORS'));
     }};
 </script>
 </body>
