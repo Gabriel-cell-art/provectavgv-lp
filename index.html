@@ -317,6 +317,8 @@
           <div class="field"><label>VGV estimado</label>
             <div class="seg" id="fVgv"><span class="opt">até 20mi</span><span class="opt on">20–50mi</span><span class="opt">50–100mi</span><span class="opt">100mi+</span></div>
           </div>
+          <input type="text" id="fHp" tabindex="-1" autocomplete="off" aria-hidden="true"
+                 style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
           <button class="btn btn-primary" id="submitBtn">Quero uma proposta <span class="ar">→</span></button>
           <div class="alt">ou <a href="https://wa.me/557193068515?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Provecta%20VGV%20e%20quero%20falar%20sobre%20um%20empreendimento." target="_blank" rel="noopener">falar direto no WhatsApp</a></div>
         </div>
@@ -526,15 +528,18 @@
   document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
     g.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');}));
 
-  // Webhook do Make. O cenário PRECISA estar ligado (ON) — se estiver desligado,
-  // o Make responde 200 e engole o lead na fila sem rodar o e-mail.
+  // Entrega do lead: Formspree é o canal que manda o e-mail e decide sucesso/erro.
+  // O Make continua recebendo em paralelo (fire-and-forget) para não quebrar
+  // nenhuma automação já montada lá — se falhar, não afeta o e-mail.
+  // Para desligar o Make, basta deixar a constante como ''.
+  const FORMSPREE='https://formspree.io/f/mljdbbkw';
   const MAKE_WEBHOOK='https://hook.us2.make.com/pybg5rima742nx5l2brpvj7cfe9oa18g';
   const WHATS='557193068515';
   const DEBUG=new URLSearchParams(location.search).has('debug');
 
   document.getElementById('submitBtn').onclick=async()=>{
     const btn=document.getElementById('submitBtn');
-    const val=id=>(document.getElementById(id).value||'').trim();
+    const val=id=>{const el=document.getElementById(id);return el?(el.value||'').trim():'';};
     const pick=id=>{const el=document.querySelector('#'+id+' .opt.on');return el?el.textContent.trim():'';};
     const nome=val('fNome'),zap=val('fZap'),emp=val('fEmp');
     let falhou=false;
@@ -544,17 +549,28 @@
     if(falhou){document.getElementById('fNome').focus();return;}
 
     const qs=new URLSearchParams(location.search);
-    const dados={
-      nome:nome, whatsapp:zap, construtora:emp||'',
-      etapa:pick('fEtapa'), vgv:pick('fVgv'),
-      utm_source:qs.get('utm_source')||'', utm_medium:qs.get('utm_medium')||'',
-      utm_campaign:qs.get('utm_campaign')||'', utm_content:qs.get('utm_content')||'',
-      pagina:location.href, enviado_em:new Date().toISOString()
+    const etapa=pick('fEtapa'), vgv=pick('fVgv');
+
+    // Chaves em português: o Formspree usa o nome do campo como rótulo no e-mail.
+    const lead={
+      'Nome':nome,
+      'WhatsApp':zap,
+      'Construtora':emp||'—',
+      'Etapa da obra':etapa,
+      'VGV estimado':vgv,
+      'Origem':qs.get('utm_source')||'direto',
+      'Campanha':qs.get('utm_campaign')||'—',
+      'Anúncio':qs.get('utm_content')||'—',
+      'Mídia':qs.get('utm_medium')||'—',
+      'Página':location.href,
+      'Enviado em':new Date().toLocaleString('pt-BR',{timeZone:'America/Bahia'}),
+      '_subject':'Novo lead — '+(emp||nome)+' · '+etapa+' · '+vgv,
+      '_gotcha':val('fHp')   // honeypot: se vier preenchido, o Formspree descarta
     };
 
-    // Backup local: se o webhook cair, o lead ainda fica recuperável no navegador.
+    // Backup local: se tudo falhar, o lead ainda é recuperável no navegador.
     try{const b=JSON.parse(localStorage.getItem('provecta_leads')||'[]');
-        b.push(dados);localStorage.setItem('provecta_leads',JSON.stringify(b.slice(-50)));}catch(e){}
+        b.push(lead);localStorage.setItem('provecta_leads',JSON.stringify(b.slice(-50)));}catch(e){}
 
     const ok=()=>{document.getElementById('ffields').style.display='none';
                   document.getElementById('formOk').style.display='block';};
@@ -562,7 +578,7 @@
     const erro=(motivo)=>{
       btn.innerHTML=txt; btn.style.opacity=''; btn.disabled=false;
       const msg='Olá! Tentei enviar pelo site e deu erro. Nome: '+nome+
-                ' | Construtora: '+(emp||'-')+' | Etapa: '+dados.etapa+' | VGV: '+dados.vgv;
+                ' | Construtora: '+(emp||'-')+' | Etapa: '+etapa+' | VGV: '+vgv;
       let box=document.getElementById('fErr');
       if(!box){box=document.createElement('div');box.id='fErr';
         box.style.cssText='margin-top:12px;padding:12px 14px;border-radius:10px;'+
@@ -573,27 +589,38 @@
         '<a href="https://wa.me/'+WHATS+'?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener"'+
         ' style="text-decoration:underline;font-weight:600">Fale no WhatsApp</a> que a gente resolve na hora.'+
         (DEBUG?'<br><code style="font-size:12px;opacity:.8">debug: '+motivo+'</code>':'');
-      if(DEBUG)console.error('[form] falha:',motivo,dados);
+      if(DEBUG)console.error('[form] falha:',motivo,lead);
     };
 
     const txt=btn.innerHTML; btn.innerHTML='Enviando…'; btn.style.opacity='.7'; btn.disabled=true;
 
+    // Canal secundário, não bloqueante: nunca derruba o envio principal.
+    if(MAKE_WEBHOOK){
+      fetch(MAKE_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(lead),keepalive:true})
+        .catch(e=>{if(DEBUG)console.warn('[form] Make falhou (ignorado):',e.message);});
+    }
+
     const ctrl=new AbortController();
-    const t=setTimeout(()=>ctrl.abort(),12000);
+    const t=setTimeout(()=>ctrl.abort(),15000);
     try{
-      const res=await fetch(MAKE_WEBHOOK,{
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(dados), signal:ctrl.signal, keepalive:true
+      const res=await fetch(FORMSPREE,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(lead), signal:ctrl.signal, keepalive:true
       });
       clearTimeout(t);
-      const corpo=await res.text().catch(()=>'');
-      if(DEBUG)console.log('[form] status',res.status,'corpo:',corpo);
-      // O Make responde 200 + "Accepted" quando aceita. Qualquer outra coisa é falha.
-      if(!res.ok){ erro('HTTP '+res.status+' — '+corpo.slice(0,180)); return; }
+      let corpo=null; try{corpo=await res.json();}catch(e){}
+      if(DEBUG)console.log('[form] Formspree status',res.status,corpo);
+      if(!res.ok){
+        const det=(corpo&&corpo.errors)?corpo.errors.map(x=>x.message).join('; ')
+                                       :('HTTP '+res.status);
+        erro(det); return;
+      }
       ok();
     }catch(e){
       clearTimeout(t);
-      erro(e.name==='AbortError'?'timeout de 12s':(e.message||'falha de rede/CORS'));
+      erro(e.name==='AbortError'?'timeout de 15s':(e.message||'falha de rede/CORS'));
     }};
 </script>
 </body>
