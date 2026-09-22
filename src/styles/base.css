@@ -1,0 +1,112 @@
+/* ============================================================
+   PROVECTA VGV — tokens e base
+   Azul canonico: #2B9FF6 (decisao de marca, 21/09).
+   --glow existe separada do --azul porque o brief do hero pedia
+   um arco verde, proibido pelo sistema de marca (§3). Fica isolada
+   aqui: trocar so este valor muda o hero sem contaminar o resto.
+   ============================================================ */
+:root{
+  --preto:#0A0A0F;
+  --preto-2:#06060A;
+  --preto-3:#13131B;
+  --branco:#FFFFFF;
+  --azul:#2B9FF6;
+  --azul-claro:#6BBBF9;
+  --azul-escuro:#0E74CB;
+  --glow:#2B9FF6;
+
+  --texto:rgba(255,255,255,.92);
+  --texto-2:rgba(255,255,255,.62);
+  --texto-3:rgba(255,255,255,.48);
+  --linha:rgba(255,255,255,.10);
+  --vidro:rgba(255,255,255,.045);
+
+  --display:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --wrap:1200px;
+  --gut:clamp(20px,5vw,64px);
+  --r:14px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+body{
+  margin:0;background:var(--preto);color:var(--texto);
+  font-family:var(--display);font-weight:400;font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
+}
+/* Lenis controla o scroll no desktop; sem JS o scroll nativo segue valendo. */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+
+img,svg,video,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+
+h1,h2,h3{font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:0}
+h1{font-size:clamp(40px,7.4vw,88px);font-weight:900}
+h2{font-size:clamp(30px,4.6vw,56px)}
+h3{font-size:clamp(19px,2vw,23px);letter-spacing:-.02em;line-height:1.25}
+p{margin:0}
+
+.wrap{width:min(100% - var(--gut)*2,var(--wrap));margin-inline:auto}
+.secao{padding:clamp(76px,11vw,150px) 0;position:relative}
+.secao-2{background:var(--preto-2)}
+.secao-3{background:var(--preto-3)}
+
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--azul);display:inline-flex;align-items:center;gap:9px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--azul);opacity:.7}
+.sub{color:var(--texto-2);font-size:clamp(16px,1.7vw,19px);max-width:62ch}
+.sechead{margin-bottom:clamp(38px,5vw,64px)}
+.sechead h2{margin:16px 0 18px}
+
+/* --- foco visivel de verdade (o zoudoctors nao tem) --- */
+:focus-visible{outline:2px solid var(--azul);outline-offset:3px;border-radius:4px}
+
+/* --- botoes --- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 26px;border-radius:999px;border:1px solid transparent;
+  font-weight:600;font-size:15px;cursor:pointer;
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),background .22s,border-color .22s,opacity .22s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primario{background:var(--azul);color:#04121f}
+.btn-primario:hover{background:var(--azul-claro)}
+.btn-fantasma{border-color:var(--linha);color:var(--texto);background:transparent}
+.btn-fantasma:hover{border-color:var(--azul);color:var(--azul)}
+.btn .seta{transition:transform .22s}
+.btn:hover .seta{transform:translateX(4px)}
+
+/* --- vidro fosco com reserva solida --- */
+.vidro{background:rgba(255,255,255,.05);border:1px solid var(--linha)}
+@supports (backdrop-filter:blur(14px)) or (-webkit-backdrop-filter:blur(14px)){
+  .vidro{background:var(--vidro);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+}
+
+/* --- reveal: desfoque -> nitido, crescendo --- */
+.reveal{opacity:0;filter:blur(7px);transform:translateY(28px) scale(.985);
+  transition:opacity .85s cubic-bezier(.2,.7,.3,1),filter .85s cubic-bezier(.2,.7,.3,1),transform .85s cubic-bezier(.2,.7,.3,1)}
+.reveal.ativo{opacity:1;filter:blur(0);transform:none}
+.d1{transition-delay:.09s}.d2{transition-delay:.18s}.d3{transition-delay:.27s}
+
+/* --- numeros e rotulos tecnicos --- */
+.num{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--texto-3)}
+
+/* ============================================================
+   Movimento reduzido: tudo estatico, nada de pin, parallax,
+   ticker, cursor ou video. O conteudo aparece inteiro.
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important;
+  }
+  .reveal{opacity:1!important;filter:none!important;transform:none!important}
+  .ticker-trilho{animation:none!important}
+  .cursor{display:none!important}
+}
