@@ -274,6 +274,7 @@ try{
   if(__TEM_VIDEO__ && video && !semMovimento && innerWidth>=1024 &&
      !(navigator.connection && navigator.connection.saveData)){
     const carregarVideo=()=>{
+      video.poster='/assets/video/hero-poster.webp';
       video.innerHTML='<source src="/assets/video/hero.webm" type="video/webm">'+
                       '<source src="/assets/video/hero.mp4" type="video/mp4">';
       video.preload='auto'; video.load();

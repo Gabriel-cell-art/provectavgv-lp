@@ -74,10 +74,10 @@
 <section class="hero" id="topo">
   <div class="hero-fundo" aria-hidden="true">
     <div class="hero-arco"></div>
-    <!-- TODO: inserir vídeo do hero. Colocar os arquivos em public/assets/video/
-         (hero.mp4 + hero.webm) e o JS carrega sozinho. Specs no README. -->
+    <!-- sem atributo poster: o navegador o baixaria mesmo onde o video nunca
+         carrega (celular, economia de dados). O JS o define junto com as sources. -->
     <video class="hero-video" id="heroVideo" muted loop playsinline preload="none"
-           poster="" aria-hidden="true"></video>
+           aria-hidden="true"></video>
   </div>
   <div class="hero-led" aria-hidden="true"></div>
   <span class="marca-gigante" aria-hidden="true">PROVECTA</span>

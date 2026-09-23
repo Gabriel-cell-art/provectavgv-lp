@@ -27,15 +27,34 @@ tools/                  scripts de auditoria (Lighthouse e screenshots)
 
 ## Vídeo do hero — como plugar
 
-O hero funciona sem vídeo: o fundo é feito em código (arco de luz com gradiente
-radial que respira em 7,5s + textura de pontos estilo LED). **Não é um espaço vazio.**
+O hero tem vídeo. Sem ele, o fundo em código assume sozinho (arco de luz com
+gradiente radial que respira em 7,5s + textura de pontos LED) — **não é um
+espaço vazio**.
 
-Para adicionar o vídeo, coloque os arquivos em `public/assets/video/` e publique:
+Arquivos em `public/assets/video/`:
 
-| arquivo | formato |
-|---|---|
-| `hero.mp4` | 1080p, 6–8s em loop, **sem áudio**, H.264, **abaixo de 3 MB** |
-| `hero.webm` | mesma fonte, VP9 (opcional, servido antes do MP4 quando suportado) |
+| arquivo | o que é | peso |
+|---|---|---|
+| `hero.mp4` | 1920x1080, 12,1s, 30fps, H.264 high, **sem faixa de áudio** | 776 KB |
+| `hero.webm` | mesma fonte em VP9, servido antes do MP4 quando suportado | 443 KB |
+| `hero-poster.webp` | primeiro frame, definido via JS (não como atributo) | 5,8 KB |
+
+**Trocando o vídeo**, atente a três coisas:
+
+1. **H.264, nunca H.265/HEVC.** O master original veio em HEVC, que o Chrome e o
+   Firefox não tocam em MP4. Transcodifique:
+   `ffmpeg -i origem.mp4 -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 30 -preset slow -movflags +faststart hero.mp4`
+2. **Remova a faixa de áudio** (`-an`). O elemento roda mudo; áudio é só peso.
+3. **Reveja o enquadramento.** O vídeo atual tem o logo centralizado, que em
+   tamanho natural cai atrás do card do formulário e lê como marca cortada.
+   O CSS o escala em 2.6 e desloca (`.hero-video` em `secoes.css`) para que só a
+   aresta diagonal e o campo de luz entrem em quadro. Outro vídeo provavelmente
+   pede outra escala — ou nenhuma.
+
+A duração de 12,1s foge da recomendação original de 6–8s de propósito: o primeiro
+e o último frame do clipe são praticamente idênticos, então ele fecha o loop
+sozinho. Cortar para 8s quebraria essa emenda, e a 776 KB a duração extra não
+custa nada.
 
 O `vite.config.js` detecta `hero.mp4` em tempo de build. Sem o arquivo, todo o
 código do vídeo é eliminado do bundle — zero requisição, zero 404. Com o arquivo,
@@ -79,13 +98,17 @@ Lighthouse mobile (throttling 4x CPU, Slow 4G), rodado sobre `npm run preview`:
 
 | | |
 |---|---|
-| Performance | **99** |
+| Performance | **98** |
 | Acessibilidade | **100** |
 | Boas práticas | **100** |
 | SEO | **100** |
-| LCP | **1,7s** (meta < 2,5s) |
+| LCP | **1,9s** (meta < 2,5s) |
 | CLS | **0,005** (meta < 0,1) |
 | Peso total | **141 KiB** (meta < 1,5 MB sem vídeo) |
+
+O vídeo não entra nessas medições porque nunca é requisitado no celular — as
+condições de carregamento acima o excluem, e isso é verificado por
+`tools/mobile-check.mjs`.
 
 Os 48 frames (2,05 MB em WebP) são **desktop apenas** e carregam via
 `requestIdleCallback` depois do hero — não entram no peso do mobile.

@@ -4,7 +4,7 @@ const chrome=await launch({
   chromePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
   chromeFlags:['--headless=new','--no-sandbox','--ignore-certificate-errors','--disable-dev-shm-usage']
 });
-const r=await lighthouse('http://localhost:4181/',{
+const r=await lighthouse('http://localhost:4192/',{
   port:chrome.port, output:'json', logLevel:'error',
   screenEmulation:{mobile:true,width:390,height:844,deviceScaleFactor:2.625,disabled:false},
   formFactor:'mobile',
