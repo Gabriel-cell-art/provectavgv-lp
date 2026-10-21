@@ -94,31 +94,47 @@
     <div class="fcard vidro">
       <div id="ffields">
         <p class="ft">Solicitar proposta</p>
-        <p class="fs">Cinco campos. A gente volta com uma proposta para a etapa da sua obra.</p>
+        <p class="fs" id="fSub">Cinco campos. A gente volta com uma proposta para a etapa da sua obra.</p>
+        <!-- Modo funil (?m=): oculto por padrao. Sem o parametro, a home nao muda. -->
+        <div class="campo" id="cSegmento" hidden><label id="lbSeg">Você é</label>
+          <div class="seg" id="fSegmento" role="radiogroup" aria-labelledby="lbSeg">
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Construtora/incorporadora</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Imobiliária</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Corretor autônomo</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Marketing/outro</span>
+          </div></div>
         <div class="campo"><label for="fNome">Nome</label>
           <input type="text" id="fNome" autocomplete="name" placeholder="Seu nome"></div>
-        <div class="f2">
+        <div class="f2" id="cDupla">
           <div class="campo"><label for="fZap">WhatsApp</label>
             <input type="tel" id="fZap" autocomplete="tel" placeholder="(71) 9 0000-0000"></div>
-          <div class="campo"><label for="fEmp">Construtora</label>
+          <div class="campo" id="cEmp"><label for="fEmp">Construtora</label>
             <input type="text" id="fEmp" autocomplete="organization" placeholder="Empresa"></div>
         </div>
-        <div class="campo"><label id="lbEtapa">Etapa do empreendimento</label>
+        <div class="campo" id="cEtapa"><label id="lbEtapa">Etapa do empreendimento</label>
           <div class="seg" id="fEtapa" role="radiogroup" aria-labelledby="lbEtapa">
             <span class="opt on" role="radio" tabindex="0" aria-checked="true">Pré-lançamento</span>
             <span class="opt" role="radio" tabindex="0" aria-checked="false">Lançamento</span>
             <span class="opt" role="radio" tabindex="0" aria-checked="false">Entrega</span>
           </div></div>
-        <div class="campo"><label id="lbVgv">VGV estimado</label>
+        <div class="campo" id="cVgv"><label id="lbVgv">VGV estimado</label>
           <div class="seg" id="fVgv" role="radiogroup" aria-labelledby="lbVgv">
             <span class="opt" role="radio" tabindex="0" aria-checked="false">até 20mi</span>
             <span class="opt on" role="radio" tabindex="0" aria-checked="true">20–50mi</span>
             <span class="opt" role="radio" tabindex="0" aria-checked="false">50–100mi</span>
             <span class="opt" role="radio" tabindex="0" aria-checked="false">100mi+</span>
           </div></div>
+        <div class="campo" id="cVerba" hidden><label id="lbVerba">Investe em anúncios por mês</label>
+          <div class="seg" id="fVerba" role="radiogroup" aria-labelledby="lbVerba">
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Não invisto</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Até R$2 mil</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">R$2–10 mil</span>
+            <span class="opt" role="radio" tabindex="0" aria-checked="false">Acima de R$10 mil</span>
+          </div></div>
         <input type="text" id="fHp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn btn-primario" id="submitBtn" type="button">Quero uma proposta <span class="seta">→</span></button>
-        <p class="alt">ou <a id="waHero" href="#" target="_blank" rel="noopener">falar direto no WhatsApp</a></p>
+        <p class="consent" id="fConsent" hidden>Ao enviar, você aceita receber contato da Provecta pelo WhatsApp.</p>
+        <p class="alt" id="fAlt">ou <a id="waHero" href="#" target="_blank" rel="noopener">falar direto no WhatsApp</a></p>
       </div>
       <div class="form-ok" id="formOk" role="status">
         <div class="ck" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"

@@ -1,0 +1,32 @@
+/* ============================================================
+   /entrega — mobile primeiro. A maioria chega pelo Instagram no celular.
+   Reaproveita os tokens de base.css: nenhuma cor nova e introduzida.
+   ============================================================ */
+.pg-entrega{min-height:100svh;display:flex;flex-direction:column;
+  background:
+    radial-gradient(ellipse 90% 52% at 50% 0%,rgba(43,159,246,.14),transparent 62%),
+    var(--preto)}
+
+.ent-topo{padding:20px 0;border-bottom:1px solid var(--linha)}
+.ent-topo .marca{display:inline-flex;align-items:center;gap:11px;
+  font-weight:700;letter-spacing:-.02em}
+.ent-topo .marca svg{width:19px;height:23px;color:var(--azul)}
+.ent-topo .marca span{font-size:15px}
+.ent-topo .marca b{font-family:var(--mono);font-size:11px;font-weight:500;
+  color:var(--texto-3);letter-spacing:.14em}
+
+.ent-main{flex:1;padding:clamp(30px,7vw,64px) 0 clamp(40px,8vw,72px)}
+.ent-main .wrap{width:min(100% - var(--gut)*2,660px)}
+
+.ent-card{padding:clamp(24px,6vw,40px);border-radius:var(--r);margin-bottom:16px}
+.ent-card h1{font-size:clamp(28px,7vw,44px);margin:14px 0 0}
+.ent-card h2{font-size:clamp(22px,5vw,32px);margin:14px 0 0}
+.ent-card .sub{margin-top:14px;font-size:clamp(15px,4vw,17px)}
+.ent-cta{margin-top:24px;width:100%}
+
+.ent-agenda{border-color:rgba(43,159,246,.34);background:rgba(43,159,246,.06)}
+
+.ent-rodape{border-top:1px solid var(--linha);padding:22px 0}
+.ent-rodape small{color:var(--texto-3);font-size:12.5px}
+
+@media (min-width:560px){ .ent-cta{width:auto} }

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 // O video do hero e opcional. Em vez de sondar por rede em runtime (que gera
 // 404 no console quando o arquivo nao existe), o build detecta a presenca do
@@ -9,11 +10,20 @@ import { existsSync } from 'node:fs';
 const TEM_VIDEO = existsSync('public/assets/video/hero.mp4');
 
 export default defineConfig({
+  // Multipagina: sem fallback de SPA, senao /entrega cai na home silenciosamente.
+  appType:'mpa',
   define:{ __TEM_VIDEO__: JSON.stringify(TEM_VIDEO) },
   build:{
     target:'es2020',
     cssCodeSplit:false,
     assetsInlineLimit:2048,
-    rollupOptions:{ output:{ manualChunks:{ motion:['gsap','lenis'] } } }
+    rollupOptions:{
+      // Multipagina: a home e a pagina de entrega do funil organico.
+      input:{
+        main:    resolve(process.cwd(),'index.html'),
+        entrega: resolve(process.cwd(),'entrega/index.html')
+      },
+      output:{ manualChunks:{ motion:['gsap','lenis'] } }
+    }
   }
 });

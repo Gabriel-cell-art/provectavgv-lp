@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seu material — Provecta VGV</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0A0F">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body class="pg-entrega">
+
+<svg style="display:none" aria-hidden="true"><symbol id="logo" viewBox="0 0 447 532" fill="currentColor"><g transform="translate(0,532) scale(0.1,-0.1)"><path d="M1060 4930 l0 -270 -435 0 c-282 0 -435 -3 -435 -10 0 -5 15 -27 33 -47 18 -21 108 -130 198 -243 91 -113 309 -383 485 -600 176 -217 378 -467 449 -555 71 -88 177 -218 235 -290 59 -71 279 -344 490 -605 334 -413 670 -828 929 -1148 l75 -92 433 0 c237 0 434 4 437 9 3 4 -33 55 -80 112 -108 133 -116 143 -319 394 -249 309 -351 435 -534 659 -90 110 -243 299 -340 419 -97 120 -239 296 -316 392 -77 95 -220 271 -317 391 -97 121 -252 311 -344 424 -91 113 -244 302 -340 420 -95 118 -199 247 -230 285 l-57 70 1158 3 c637 1 1160 0 1163 -2 2 -3 -75 -103 -172 -223 -98 -120 -182 -225 -189 -233 -7 -8 -42 -51 -78 -95 -197 -239 -449 -558 -448 -568 0 -15 420 -530 434 -533 6 -2 29 20 51 49 23 29 169 210 326 402 156 193 332 411 392 485 131 164 153 190 247 305 175 211 399 495 399 504 0 5 -51 67 -112 138 -62 71 -151 173 -198 226 l-84 97 -1453 0 -1453 0 0 -270z M1456 2233 c-43 -54 -85 -107 -94 -118 -56 -68 -203 -249 -293 -360 -58 -71 -129 -159 -158 -195 -29 -36 -113 -139 -186 -230 -73 -91 -239 -295 -369 -455 -130 -159 -236 -293 -236 -297 0 -3 37 -49 83 -100 45 -52 129 -148 186 -214 57 -65 113 -127 124 -136 18 -17 102 -18 1463 -18 l1444 0 0 275 0 275 -1170 0 c-643 0 -1170 3 -1170 6 0 6 109 142 375 469 260 320 499 615 513 635 11 15 -1 35 -107 166 -266 331 -314 389 -321 392 -4 1 -42 -41 -84 -95z"/></g></symbol></svg>
+
+<!-- Cabecalho so com a logo: sem menu e sem caminho de volta ao formulario. -->
+<header class="ent-topo">
+  <div class="wrap">
+    <span class="marca" aria-label="Provecta VGV">
+      <svg aria-hidden="true"><use href="#logo"></use></svg>
+      <span>Provecta <b>VGV</b></span>
+    </span>
+  </div>
+</header>
+
+<main class="ent-main">
+  <div class="wrap">
+
+    <!-- material encontrado e ativo -->
+    <section class="ent-card vidro" id="blocoMaterial" hidden>
+      <span class="eyebrow" id="entTipo">Material</span>
+      <h1 id="entTitulo"></h1>
+      <p class="sub" id="entDescricao"></p>
+      <a class="btn btn-primario ent-cta" id="entBotao" href="#" target="_blank" rel="noopener">
+        Abrir material <span class="seta">→</span>
+      </a>
+    </section>
+
+    <!-- palavra inexistente ou material inativo -->
+    <section class="ent-card vidro" id="blocoIndisponivel" hidden>
+      <h1>Esse material não está mais disponível.</h1>
+      <p class="sub">Dá uma olhada no perfil — os materiais novos saem por lá.</p>
+      <a class="btn btn-fantasma ent-cta" id="entInsta" href="#" target="_blank" rel="noopener">
+        Ver @provectavgv no Instagram
+      </a>
+    </section>
+
+    <!-- diagnostico: so quando q=1 -->
+    <section class="ent-card vidro ent-agenda" id="blocoAgenda" hidden>
+      <span class="eyebrow">Próximo passo</span>
+      <h2>Quer aplicar isso na sua operação?</h2>
+      <p class="sub">A gente faz um diagnóstico de 30 minutos e te mostra onde estão os gaps
+        da sua operação comercial.</p>
+      <a class="btn btn-primario ent-cta" id="entAgenda" target="_blank" rel="noopener"
+         href="https://calendar.app.google/3wJX8SBvu4HLUA8z5">
+        Agendar diagnóstico <span class="seta">→</span>
+      </a>
+    </section>
+
+    <!-- Reservado. Ative com MOSTRAR_RAIO_X = true em src/scripts/entrega.js -->
+    <section class="ent-card vidro" id="blocoRaioX" hidden>
+      <span class="eyebrow">Em breve</span>
+      <h2>Raio-X da operação</h2>
+    </section>
+
+  </div>
+</main>
+
+<footer class="ent-rodape">
+  <div class="wrap">
+    <small>© <span id="ano">2026</span> Provecta · Salvador, BA</small>
+  </div>
+</footer>
+
+<script type="module" src="/src/scripts/entrega.js"></script>
+</body>
+</html>
