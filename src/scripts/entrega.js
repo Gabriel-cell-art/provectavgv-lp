@@ -12,7 +12,7 @@ import { materialAtivo } from '../data/materiais.js';
 // Bloco reservado, desligado. Trocar para true quando for ao ar.
 const MOSTRAR_RAIO_X = false;
 
-const INSTAGRAM = 'https://instagram.com/provectavgv';
+const INSTAGRAM = 'https://instagram.com/provecta.vgv';
 
 const ROTULO_TIPO = { prompt:'Prompt', tutorial:'Tutorial', app:'App' };
 

@@ -56,6 +56,9 @@ export function montarFunil(){
   const titulo = (material && material.ativo) ? material.titulo : 'o material';
 
   const $ = id => document.getElementById(id);
+  const tit = $('fTitulo');
+  if(tit) tit.textContent = 'Acesso ao material';
+
   const sub = $('fSub');
   if(sub) sub.textContent = 'Preencha e receba ' + titulo + ' na hora.';
 
