@@ -12,7 +12,7 @@
    ============================================================ */
 export const MATERIAIS = [
   {
-    palavra:     'TESTE',
+    palavra:     'FORMS',
     titulo:      'Material de teste',
     descricao:   'Material de validação do funil. Usado só para conferir o fluxo ponta a ponta.',
     tipo:        'prompt',
