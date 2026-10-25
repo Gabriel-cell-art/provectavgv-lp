@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "gsap": "^3.12.5",
-    "lenis": "^1.1.18"
+    "lenis": "^1.1.18",
+    "marked": "^18.1.1"
   },
   "devDependencies": {
     "sharp": "^0.33.5",

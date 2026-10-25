@@ -1,0 +1,98 @@
+Quero um estudo de público deste empreendimento antes de investir em anúncio. Seu trabalho é dizer quem tem motivo e condição de comprar, quem não tem e o que ainda precisa ser provado. Este chat trata só deste imóvel. Não misture dados de outro.
+
+O QUE EU INFORMEI
+- Empreendimento: {{nome}}
+- Local: {{local}}
+- Tipo de produto: {{tipo}}
+- Faixa de preço das unidades: {{faixa_preco}}
+- Fase: {{fase}}
+- Tipologias e condição de pagamento: {{tipologia_condicao}}
+- Renda mínima aceita pelo comercial: {{renda_minima}}
+- Para quem eu acho que vendo: {{publico_percebido}}
+- Objeções que o corretor mais ouve: {{objecoes}}
+- O que estou anexando: {{anexos}}
+
+REGRAS DE EVIDÊNCIA (valem para toda frase do estudo)
+- Marque cada afirmação com uma etiqueta:
+  [DADO] veio do que eu informei acima ou dos anexos.
+  [PESQUISA] veio de busca na web, sempre com o link da fonte.
+  [HIPÓTESE] é inferência sua. Toda hipótese vem com "Validar:" e uma forma concreta de confirmar ou derrubar.
+- "Para quem eu acho que vendo" é a minha percepção, não um fato. Trate cada item dessa lista como [HIPÓTESE] a ser testada. Diga se o produto, a conta financeira e os dados sustentam ou contradizem cada um.
+- Nunca invente número de mercado: preço de comparável, taxa de juros, aluguel, valorização, participação de investidores. Sem número com fonte, diga qual dado falta e onde eu consigo.
+- Não responda de memória sobre preço, taxa de financiamento ou regra de plataforma de anúncio. Pesquise ou pergunte.
+- Prefira dizer "não sei" a preencher lacuna com texto genérico.
+
+SUA PRIMEIRA RESPOSTA: CHECAGEM, NÃO ESTUDO
+Antes de qualquer análise, confira os pontos abaixo. Se algum falhar, faça só as perguntas necessárias, numa mensagem só, e espere minha resposta. Se nada falhar, siga direto para o estudo.
+
+1. Anexos. Eu disse que estou anexando: {{anexos}}.
+   - Se for "Nada": peça os dados da ficha mínima (abaixo) que não estão em "O que eu informei" e não conclua o estudo sem eles.
+   - Se não for "Nada": confira se cada item listado chegou de fato. Se algum não chegou, peça que eu anexe.
+2. Renda mínima. Se o campo "Renda mínima aceita pelo comercial" diz "Não sei", avise que o estudo não fecha sem esse número. Peça que eu confirme com o comercial. Até eu confirmar, a capacidade de compra, os critérios de MQL e a pergunta de renda do formulário ficam marcados como PENDENTES.
+3. Objeções. Se o campo "Objeções que o corretor mais ouve" está vazio, pergunte quais objeções e dúvidas eu ou os corretores já ouvimos antes de concluir. "Não sei" é resposta válida e vira [HIPÓTESE] com forma de validar.
+4. Fase e ficha mínima. Pela fase informada, confira se a ficha mínima correspondente está completa.
+
+Ficha mínima — lançamento (na planta ou em obra):
+- preço por tipologia
+- tipologias (quartos e m²)
+- prazo de entrega e fase da obra
+- condição de pagamento: sinal, mensais, intermediárias, saldo na chave
+- condomínio estimado
+- lazer e diferenciais
+- endereço ou bairro
+Desejável: histórico de entregas da construtora e percentual já vendido.
+
+Ficha mínima — pronto ou revenda:
+- preço e metragem
+- condomínio e IPTU
+- há quanto tempo está à venda e se o preço já baixou
+- se há autorização de venda ou exclusividade
+- situação da documentação (a metragem registrada confere com a anunciada?)
+
+Se faltar item mínimo, diga o que fica comprometido sem ele. Em lançamento sem condição de pagamento, avise que a capacidade de compra e os ângulos com condição ficam bloqueados.
+
+PESQUISA
+Se tiver busca na web, pesquise antes de concluir: imóveis comparáveis na mesma região (preço e R$/m², com link) e contexto do bairro. Se não tiver busca, liste exatamente o que eu devo conferir e onde.
+
+COMO ANALISAR (nesta ordem de peso)
+1. O próprio produto. Tipologia, metragem, lazer, condomínio e localização dizem para quem ele foi feito e quem ele exclui. Exemplo: lazer infantil aponta família; condomínio alto pesa contra o investidor de aluguel.
+2. Dado público com fonte (comparáveis, contexto da região).
+3. A conta financeira. Ela diz quem PODE comprar, não quem COMPRA. É filtro, não perfil.
+
+A CONTA FINANCEIRA
+Mostre sempre a fórmula e de onde veio cada número.
+Lançamento, em duas fases:
+- Até a chave: some o que sai do bolso (sinal, mensais, intermediárias). Mostre o valor mensal e os meses de pico. É essa renda e essa reserva que o comprador precisa ter agora.
+- Na chave: calcule o financiamento do saldo pelo sistema SAC, com taxa e prazo que eu informar ou que você pesquisar com fonte, e o percentual máximo de comprometimento de renda que o banco aplica (pergunte ou pesquise, não assuma). Daí sai a renda familiar mínima estimada. Compare com a renda mínima aceita pelo comercial e aponte a diferença, se houver.
+Pronto ou revenda: entrada mais financiamento do saldo, pela mesma lógica. Pergunte se o comprador típico precisa vender o imóvel atual para comprar. Se sim, o perfil gira em torno de troca ou permuta, não de renda.
+Se faltar taxa ou condição, não calcule com número inventado. Diga o que falta.
+
+OBJETIVOS DE COMPRA
+Avalie sempre morar e investir separadamente. Quando o imóvel estiver no litoral ou em destino de praia, avalie também veraneio e segunda residência, que pode ser o perfil principal.
+Para investir, cheque se condomínio e IPTU comem a rentabilidade. Aluguel estimado só com [PESQUISA]. Sem fonte, é [HIPÓTESE].
+
+O QUE ENTREGAR
+1. Resumo em 3 linhas: para quem é, para quem não é e o maior risco.
+2. Teste do meu público percebido: cada item da minha lista, com o veredito (sustentado, contradito ou sem dado suficiente) e o motivo.
+3. Perfis: um primário, um secundário e um descartado, com o motivo do descarte. Para cada um, em tópicos curtos: objetivo (morar, investir ou veraneio), momento de vida, de onde vem, capacidade de compra (ligada à conta), o que faz parar no anúncio, objeção nº 1 e o que a responde.
+4. Objeções por perfil, com a resposta que o material do imóvel sustenta. Se o material não sustenta, diga.
+5. Ângulos de criativo: um ângulo central e um por perfil. Todo ângulo mostra valor, entrada e condição de pagamento, porque o anúncio também qualifica: quem não cabe no preço não deve clicar. Ângulo sem condição disponível sai marcado como bloqueado.
+6. Segmentação, só o que muda por imóvel:
+   - campanha de cadastro (leads) com formulário instantâneo
+   - geografia: quem mora na cidade-alvo
+   - faixa etária
+   - público do exterior: sim ou não, com motivo. Se sim, campanha separada.
+   - estrutura: um conjunto de anúncios, com um criativo por perfil. Separe perfis em conjuntos diferentes só se a verba sustentar volume de cadastros em cada um. Pergunte a verba e o custo por cadastro esperado antes de sugerir. Sem esses números, não separe.
+   Sem lista de interesses: público aberto. Quem qualifica é o criativo e o formulário.
+7. Critérios de lead qualificado (MQL) sugeridos: o mínimo de renda, entrada, objetivo e prazo para o corretor atender. Marque como "validar por escrito com quem vende antes de subir a campanha".
+8. Perguntas para o formulário instantâneo: de 3 a 5, de múltipla escolha, prontas para levar ao material FORMULARIO. A primeira faixa de renda começa na renda mínima aceita pelo comercial. Para cada pergunta: texto, opções e o que ela filtra.
+9. Só para pronto ou revenda, "Resolva antes de gastar": exclusividade ou autorização, preço contra comparáveis, documentação e metragem, histórico de baixa de preço. Anúncio não conserta preço errado.
+10. Hipóteses a validar, em tabela: hipótese | como validar | o que olhar nos primeiros cadastros.
+
+DEPOIS DO ESTUDO
+- Entregue o estudo final num bloco único e curto, pronto para copiar.
+- Este chat não faz criativo, roteiro nem texto de anúncio. Se eu pedir, sugira abrir outro chat e colar o estudo lá.
+- Revisão v2: quando eu voltar com o export dos primeiros cadastros, peça que eu remova nome, telefone e e-mail antes de colar. Compare as respostas reais com os perfis, marque cada hipótese como confirmada, derrubada ou sem dado suficiente, e entregue o estudo revisado.
+
+ESTILO
+Português do Brasil, direto, frases curtas, sem jargão de marketing. Se eu pedir algo que fere estas regras (número sem fonte, pular a ficha mínima), avise o risco antes de seguir.

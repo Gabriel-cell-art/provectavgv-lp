@@ -20,6 +20,9 @@ src/styles/base.css     tokens, tipografia, reveal, prefers-reduced-motion
 src/styles/secoes.css   componentes e seções
 src/scripts/main.js     entrada única — importa GSAP, ScrollTrigger e Lenis UMA vez
 src/scripts/formulario.js  captação isolada do motion
+src/scripts/entrega.js  página /entrega (seções do .md, quiz, pop-up)
+src/config.js           WhatsApp e destinos de lead
+content/                materiais do funil e pop-up de diagnóstico
 public/assets/frames/   48 frames WebP da sequência cinematográfica (desktop)
 public/assets/video/    slot do vídeo do hero (vazio por enquanto)
 tools/                  scripts de auditoria (Lighthouse e screenshots)
@@ -91,6 +94,54 @@ GSAP falhar, o formulário continua funcionando e visível.
 
 > Plano free do Formspree limita a 50 envios/mês. Acima disso os envios são
 > bloqueados em silêncio — confira o plano antes de subir campanha.
+
+## Funil orgânico: materiais, quiz e Raio-X
+
+Home com `?m=<palavra>` entra em modo funil. O envio gera um `lead_id` (uuid),
+manda junto com o cadastro e redireciona para
+`/entrega/?m=<PALAVRA>&q=<0|1>&s=<segmento>&l=<lead_id>`.
+`s` = `construtora | imobiliaria | corretor | outro`.
+
+Configuração global em `src/config.js` (`WHATSAPP_NUMERO`, Formspree, Make).
+
+### Material novo (só arquivos em `content/materiais/`)
+
+| arquivo | obrigatório | o que é |
+|---|---|---|
+| `<palavra>.md` | sim | frontmatter + seções. A palavra é o nome do arquivo. |
+| `<palavra>.quiz.json` | com `quiz: true` | perguntas: `chave`, `texto`, `tipo` (`texto`/`unica`/`multipla`), `obrigatoria`, `placeholder`, `opcoes`, `exclusiva`, `padrao` |
+| `<palavra>.prompt.txt` | com `quiz: true` | prompt-modelo com `{{chave}}` |
+
+Frontmatter: `titulo`, `descricao`, `tipo`, `ativo`, `quiz`, `proximo`,
+`urlMaterial`, `acaoWhatsapp` (frase do pop-up, aceita `{{chave}}` do quiz),
+`rotulo_<secao>`. Lista completa em `src/data/materiais.js`.
+
+Seções do `.md`, renderizadas na ordem do arquivo, cada uma aberta por um
+marcador: `<!-- intro -->`, `<!-- passos -->`, `<!-- quiz -->`,
+`<!-- material -->`, `<!-- proximo -->`, `<!-- qualificado -->` (só q=1),
+`<!-- nao-qualificado -->` (só q=0). Parágrafo que é só um link vira botão.
+`<!-- proximo -->` só aparece se o material de `proximo` existir e estiver ativo.
+Um `.md` só com frontmatter usa o cartão simples de antes (ex.: `forms.md`).
+
+No prompt, múltipla escolha entra separada por vírgula, opcional vazia entra
+vazia e `padrao` preenche a resposta em branco.
+
+### Pop-up de diagnóstico (Raio-X)
+
+Global, definido em `content/popup-diagnostico.json`: perguntas, regra de
+vazamento por opção (`vazamento`), frases, títulos e mensagem de WhatsApp.
+Abre só depois de copiar o prompt e enquanto não foi respondido: no
+carregamento, ao voltar para a aba (visibilitychange/focus/pageshow) ou 30s
+após a cópia. No máximo uma vez por sessão. Fechado sem resposta, vira cartão
+no fim da página; respondido, o cartão mostra o resultado salvo.
+
+Estado salvo em `localStorage` por material e lead (`provecta:<PALAVRA>:<lead_id>`):
+respostas do quiz, prompt, flag `copiou`, respostas do pop-up. Quem volta do app
+do Claude e tem a página recarregada encontra o prompt pronto.
+
+Quiz e pop-up enviam ao Make e ao Formspree com `lead_id`, `m`,
+`origem = funil-ia` e `tipo_envio` (`quiz` ou `raio-x`). Para poupar a cota do
+Formspree, `RESPOSTAS_NO_FORMSPREE = false` em `src/config.js`.
 
 ## Resultado da auditoria
 

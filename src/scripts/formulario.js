@@ -6,13 +6,12 @@
 
    Entrega: Formspree e o canal que dispara o e-mail e decide
    sucesso/erro na tela. O Make recebe em paralelo, sem bloquear,
-   para nao quebrar automacao ja montada la. Esvazie MAKE para desligar.
+   para nao quebrar automacao ja montada la. Esvazie MAKE (src/config.js) para desligar.
    ============================================================ */
 import { montarFunil, aplicarSegmento, ehQualificado, utms, urlEntrega,
          SEG_CONSTRUTORA } from './funil.js';
-
-const FORMSPREE = 'https://formspree.io/f/mljdbbkw';
-const MAKE      = 'https://hook.us2.make.com/pybg5rima742nx5l2brpvj7cfe9oa18g';
+import { novoId } from './envio.js';
+import { FORMSPREE, MAKE } from '../config.js';
 const WHATS     = '557193068515';
 const DEBUG     = new URLSearchParams(location.search).has('debug');
 
@@ -79,6 +78,8 @@ export function iniciarFormulario(){
     const qs=new URLSearchParams(location.search);
     const etapa=pick('fEtapa'), vgv=pick('fVgv');
     const qualificado = funil ? ehQualificado(segmento, verba) : null;
+    // Id unico do lead no funil: vai no cadastro e na URL da /entrega.
+    const leadId = funil ? novoId() : '';
 
     // Chaves em portugues: viram rotulos no corpo do e-mail do Formspree.
     const lead={
@@ -100,6 +101,7 @@ export function iniciarFormulario(){
       Object.assign(lead, {
         'Origem':        'funil-ia',
         'origem':        'funil-ia',
+        'lead_id':       leadId,
         'palavra':       funil.palavra,
         'segmento':      segmento,
         'verba':         verba || '',
@@ -126,7 +128,7 @@ export function iniciarFormulario(){
     const txt=btn.innerHTML;
     const ok=()=>{
       if(funil){                               // funil: vai para a entrega
-        location.href = urlEntrega(funil.palavra, qualificado, segmento);
+        location.href = urlEntrega(funil.palavra, qualificado, segmento, leadId);
         return;
       }
       document.getElementById('ffields').style.display='none';

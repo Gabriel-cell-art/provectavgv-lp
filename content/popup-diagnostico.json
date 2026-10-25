@@ -1,0 +1,67 @@
+{
+  "titulo": "Agora, a parte que o Claude não vê",
+  "subtitulo": "5 perguntas, um toque cada, para ver onde sua operação vaza.",
+  "segundosAposCopia": 30,
+
+  "elos": ["CAPTAR", "POSICIONAR", "CONVERTER"],
+
+  "perguntas": [
+    { "chave": "leads_mes", "texto": "Quantos leads chegam por mês?",
+      "opcoes": ["Até 50", "50–200", "200–500", "Mais de 500", "Não sei"],
+      "vazamento": { "Não sei": ["CAPTAR"] },
+      "frase": "Sem saber quantos leads chegam, não dá pra saber se o problema é volume ou conversão." },
+
+    { "chave": "primeiro_contato", "texto": "Em quanto tempo sai o primeiro contato com o lead?",
+      "opcoes": ["Até 5 min", "Até 1 hora", "No mesmo dia", "No dia seguinte ou mais", "Não sei"],
+      "vazamento": { "No dia seguinte ou mais": ["CONVERTER"], "Não sei": ["CONVERTER"] },
+      "frase": "Lead que espera até o dia seguinte já conversou com outro corretor." },
+
+    { "chave": "visita_medida", "texto": "Você sabe quantos leads viram visita?",
+      "opcoes": ["Sim, com número", "Mais ou menos", "Não"],
+      "vazamento": { "Mais ou menos": ["POSICIONAR"], "Não": ["POSICIONAR"] },
+      "frase": "Sem saber quantos leads viram visita, seu estudo de público continua sendo hipótese." },
+
+    { "chave": "roteiro", "texto": "O corretor segue um roteiro escrito no atendimento?",
+      "opcoes": ["Sim, todos", "Alguns", "Cada um do seu jeito"],
+      "vazamento": { "Alguns": ["CONVERTER"], "Cada um do seu jeito": ["CONVERTER"] },
+      "frase": "Sem roteiro, cada corretor vende de um jeito, e ninguém sabe qual jeito funciona." },
+
+    { "chave": "gargalo", "texto": "Onde sua venda trava mais hoje?",
+      "opcoes": ["Chega pouco lead", "Chega lead ruim", "Lead bom não vira visita", "Visita não vira venda", "Não sei onde quebra"],
+      "sempre": true,
+      "vazamento": {
+        "Chega pouco lead": ["CAPTAR"],
+        "Chega lead ruim": ["POSICIONAR"],
+        "Lead bom não vira visita": ["CONVERTER"],
+        "Visita não vira venda": ["CONVERTER"],
+        "Não sei onde quebra": ["CAPTAR", "POSICIONAR", "CONVERTER"]
+      },
+      "frase": "Você mesmo apontou o gargalo em: {{resposta}}." }
+  ],
+
+  "resultado": {
+    "tituloSinais": "Você marcou {{n}} sinais de vazamento em {{elos}}",
+    "tituloUmSinal": "Você marcou 1 sinal de vazamento em {{elos}}",
+    "ponte": "O diagnóstico olha os três elos da sua operação com número, não só esse. São 30 minutos, de graça.",
+    "tituloOrganizada": "Sua operação parece bem organizada",
+    "textoOrganizada": "Você apontou o gargalo em {{gargalo}}. O diagnóstico confirma com os seus números onde está o próximo ganho. São 30 minutos, de graça."
+  },
+
+  "botaoDiagnostico": "Quero meu diagnóstico gratuito →",
+  "botaoProximo": "Pedir o próximo material →",
+
+  "mensagemDiagnostico": [
+    "Oi! {{acao}}.",
+    "Sou {{segmento}}.",
+    "Meu maior gargalo hoje: {{gargalo}}.",
+    "Primeiro contato: {{primeiro_contato}}.",
+    "Quero o diagnóstico gratuito."
+  ],
+  "acaoPadrao": "Vim do material {{palavra}}",
+
+  "cartao": {
+    "titulo": "Raio-X da sua operação em 30 segundos",
+    "texto": "5 perguntas, um toque cada.",
+    "botao": "Fazer o Raio-X →"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "titulo": "Monte o seu prompt",
+  "perguntas": [
+    { "chave": "nome", "texto": "Qual o nome do empreendimento?", "tipo": "texto", "obrigatoria": true },
+    { "chave": "local", "texto": "Cidade e bairro?", "tipo": "texto", "obrigatoria": true },
+    { "chave": "tipo", "texto": "Que tipo de produto é?", "tipo": "unica", "obrigatoria": true,
+      "opcoes": ["Apartamento", "Casa em condomínio", "Lote", "Segunda residência / praia", "Studio / compacto", "Comercial"] },
+    { "chave": "faixa_preco", "texto": "Faixa de preço das unidades?", "tipo": "unica", "obrigatoria": true,
+      "opcoes": ["Até R$350 mil", "R$350–700 mil", "R$700 mil–1,5 mi", "R$1,5–3 mi", "Acima de R$3 mi"] },
+    { "chave": "fase", "texto": "Em que fase está?", "tipo": "unica", "obrigatoria": true,
+      "opcoes": ["Pré-lançamento", "Lançamento", "Em obra", "Pronto / remanescentes"] },
+    { "chave": "tipologia_condicao", "texto": "Tipologias e condição de pagamento", "tipo": "texto", "obrigatoria": true,
+      "placeholder": "Ex.: 2 e 3 quartos, 60–90 m², entrada de 10% e 60x" },
+    { "chave": "renda_minima", "texto": "Renda mínima que o comercial aceita?", "tipo": "unica", "obrigatoria": true,
+      "opcoes": ["Até R$5 mil", "R$5–10 mil", "R$10–20 mil", "R$20–40 mil", "Acima de R$40 mil", "Não sei"] },
+    { "chave": "publico_percebido", "texto": "Para quem você acha que vende hoje?", "tipo": "multipla", "obrigatoria": true,
+      "opcoes": ["Primeira compra", "Família trocando de imóvel", "Investidor de renda", "Investidor de valorização", "Veraneio"] },
+    { "chave": "objecoes", "texto": "As 3 objeções que o corretor mais ouve", "tipo": "texto", "obrigatoria": false,
+      "placeholder": "Ex.: preço, prazo de entrega, distância" },
+    { "chave": "anexos", "texto": "O que você tem para anexar no Claude?", "tipo": "multipla", "obrigatoria": false,
+      "opcoes": ["Ficha", "Tabela", "Book", "Export de leads do CRM", "Nada"],
+      "exclusiva": "Nada", "padrao": "Nada" }
+  ]
+}

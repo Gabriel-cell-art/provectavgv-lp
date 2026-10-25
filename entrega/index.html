@@ -29,7 +29,10 @@
 <main class="ent-main">
   <div class="wrap">
 
-    <!-- material encontrado e ativo -->
+    <!-- material com secoes no .md: montado por src/scripts/entrega.js -->
+    <div id="entConteudo"></div>
+
+    <!-- material so com frontmatter (formato simples) -->
     <section class="ent-card vidro" id="blocoMaterial" hidden>
       <span class="eyebrow" id="entTipo">Material</span>
       <h1 id="entTitulo"></h1>
@@ -68,12 +71,6 @@
          href="https://calendar.app.google/3wJX8SBvu4HLUA8z5">
         Agendar diagnóstico gratuito <span class="seta">→</span>
       </a>
-    </section>
-
-    <!-- Reservado. Ative com MOSTRAR_RAIO_X = true em src/scripts/entrega.js -->
-    <section class="ent-card vidro" id="blocoRaioX" hidden>
-      <span class="eyebrow">Em breve</span>
-      <h2>Raio-X da operação</h2>
     </section>
 
   </div>

@@ -30,3 +30,95 @@
 .ent-rodape small{color:var(--texto-3);font-size:12.5px}
 
 @media (min-width:560px){ .ent-cta{width:auto} }
+
+/* ============================================================
+   Secoes vindas do .md do material
+   ============================================================ */
+.ent-md > :first-child{margin-top:14px}
+.ent-md h1{font-size:clamp(28px,7vw,44px)}
+.ent-md h2{font-size:clamp(22px,5vw,32px)}
+.ent-md h3{font-size:clamp(18px,4.4vw,21px);margin-top:22px}
+.ent-md p,.ent-md ul,.ent-md ol{color:var(--texto-2);font-size:clamp(15px,4vw,17px);margin:14px 0 0}
+.ent-md ul,.ent-md ol{padding-left:1.25em}
+.ent-md li{margin-top:8px}
+.ent-md li::marker{color:var(--azul);font-family:var(--mono);font-size:.85em}
+.ent-md strong{color:var(--texto);font-weight:600}
+.ent-md a:not(.btn){color:var(--azul);text-decoration:underline;text-underline-offset:3px}
+.ent-md code{font-family:var(--mono);font-size:.9em}
+.ent-acao{margin:0!important}
+
+/* ============================================================
+   Quiz — uma pergunta por tela, mobile primeiro
+   ============================================================ */
+.ent-quiz{scroll-margin-top:16px}
+.qz-topo{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qz-barra{height:3px;border-radius:3px;background:var(--linha);margin:14px 0 4px;overflow:hidden}
+.qz-barra i{display:block;height:100%;background:var(--azul);border-radius:3px;transition:width .35s cubic-bezier(.2,.7,.3,1)}
+.qz-pergunta{font-size:clamp(22px,6vw,30px);margin:22px 0 0;outline:none}
+.qz-dica{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--texto-3);margin-top:10px}
+.qz-input{width:100%;margin-top:18px;padding:15px 16px;border-radius:10px;font-size:16px;
+  background:rgba(255,255,255,.04);border:1px solid var(--linha);transition:border-color .2s,box-shadow .2s}
+.qz-input::placeholder{color:rgba(255,255,255,.3)}
+.qz-input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(43,159,246,.16)}
+.qz-opcoes{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.qz-opcao{width:100%;text-align:left;padding:14px 16px;border-radius:12px;cursor:pointer;
+  border:1px solid var(--linha);background:rgba(255,255,255,.03);font-size:16px;line-height:1.35;
+  transition:border-color .2s,background .2s,color .2s;-webkit-tap-highlight-color:transparent}
+.qz-opcao:hover{border-color:rgba(255,255,255,.28)}
+.qz-opcao.on{background:var(--azul);border-color:var(--azul);color:#04121f;font-weight:600}
+.qz-erro{color:#e0564f;font-size:14px;min-height:1.4em;margin-top:10px}
+.qz-erro:empty{margin-top:0}
+.qz-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.qz-nav .btn{padding:14px 20px}
+.qz-seguir{flex:1}
+.qz-voltar{flex:0 0 auto}
+
+/* ---------- prompt gerado ---------- */
+.ent-quiz h2{font-size:clamp(22px,5vw,32px);margin:14px 0 0;outline:none}
+.qz-copiar{width:100%;margin-top:22px;padding:19px 26px;font-size:17px}
+.qz-aviso{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--azul);
+  min-height:1.5em;margin-top:10px;opacity:0;transition:opacity .2s}
+.qz-aviso.on{opacity:1}
+.qz-prompt{margin:8px 0 0;max-height:46vh;overflow:auto;padding:16px;border-radius:12px;
+  background:rgba(0,0,0,.35);border:1px solid var(--linha);color:var(--texto-2);
+  font-family:var(--mono);font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;
+  -webkit-user-select:text;user-select:text;-webkit-overflow-scrolling:touch}
+.qz-dica-claude{text-transform:none;letter-spacing:.02em;font-size:12.5px;line-height:1.5;margin-top:14px}
+.qz-refazer{margin-top:18px;width:100%}
+
+/* ============================================================
+   Pop-up de diagnostico (Raio-X)
+   Folha de baixo no celular, caixa central no desktop.
+   ============================================================ */
+html.rx-trava,html.rx-trava body{overflow:hidden}
+.rx-fundo{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(6,6,10,.72);opacity:0;transition:opacity .25s}
+.rx-fundo.on{opacity:1}
+.rx-fundo[hidden]{display:none}
+.rx-caixa{position:relative;width:100%;max-height:92svh;overflow:auto;overscroll-behavior:contain;
+  padding:28px 20px calc(24px + env(safe-area-inset-bottom));border-radius:18px 18px 0 0;
+  background:var(--preto-3);border:1px solid var(--linha);border-bottom:0;
+  transform:translateY(24px);transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.rx-fundo.on .rx-caixa{transform:none}
+.rx-fechar{position:absolute;top:10px;right:10px;width:44px;height:44px;display:grid;place-items:center;
+  border:0;background:transparent;color:var(--texto-2);cursor:pointer;border-radius:50%}
+.rx-fechar:hover{color:var(--branco);background:rgba(255,255,255,.06)}
+.rx-cabeca{padding-right:36px;margin-bottom:22px}
+.rx-cabeca h2,.rx-corpo > h2{font-size:clamp(24px,6.4vw,32px);outline:none;padding-right:36px}
+.rx-corpo > h2{margin-top:14px}
+.rx-cabeca .sub{margin-top:10px;font-size:15.5px}
+.rx-pergunta{font-size:clamp(20px,5.4vw,26px)}
+.rx-frases{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:10px}
+.rx-frases li{padding:12px 14px 12px 16px;border-left:2px solid var(--azul);background:rgba(255,255,255,.035);
+  border-radius:0 10px 10px 0;color:var(--texto);font-size:15.5px;line-height:1.5}
+.rx-corpo .sub,#blocoRaioX .sub{margin-top:16px;font-size:15.5px}
+.rx-cta{width:100%;margin-top:22px}
+#blocoRaioX h2{font-size:clamp(22px,5vw,30px);margin-top:14px}
+#blocoRaioX .rx-frases li{font-size:15px}
+
+@media (min-width:560px){
+  .qz-refazer,.rx-cta{width:auto}
+  .rx-fundo{align-items:center;padding:24px}
+  .rx-caixa{max-width:540px;border-radius:18px;border-bottom:1px solid var(--linha);padding:34px 32px 30px}
+}

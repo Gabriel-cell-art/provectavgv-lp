@@ -8,18 +8,20 @@ export const SEG_CONSTRUTORA = 'Construtora/incorporadora';
 const VERBAS_QUALIFICAM = ['R$2–10 mil','Acima de R$10 mil'];
 
 // Segmento viaja para a /entrega como ?s=<slug>, sem acento nem barra.
+// Valores: construtora | imobiliaria | corretor | outro
 const SLUG_SEGMENTO = {
   'Construtora/incorporadora': 'construtora',
   'Imobiliária':               'imobiliaria',
   'Corretor autônomo':         'corretor',
-  'Marketing/outro':           'marketing'
+  'Marketing/outro':           'outro'
 };
 /** Texto do segmento na mensagem de WhatsApp, a partir do slug. */
 export const TEXTO_SEGMENTO = {
   construtora: 'construtora/incorporadora',
   imobiliaria: 'imobiliária',
   corretor:    'corretor autônomo',
-  marketing:   'marketing/outro'
+  outro:       'marketing/outro',
+  marketing:   'marketing/outro'   // slug antigo: links ja enviados com s=marketing
 };
 
 /** Le ?m= da URL. Retorna null quando o parametro nao existe. */
@@ -122,11 +124,13 @@ export function aplicarSegmento(segmento){
 }
 
 /** Destino pos-envio, preservando os UTMs presentes na URL. */
-export function urlEntrega(palavra, qualificado, segmento){
+export function urlEntrega(palavra, qualificado, segmento, leadId){
   const q = new URLSearchParams();
   q.set('m', String(palavra).toUpperCase());
   q.set('q', qualificado ? '1' : '0');
   if(SLUG_SEGMENTO[segmento]) q.set('s', SLUG_SEGMENTO[segmento]);
+  // Id do lead: liga quiz e pop-up da /entrega a este cadastro.
+  if(leadId) q.set('l', leadId);
   const u = utms();
   Object.keys(u).forEach(k=>{ if(u[k]) q.set(k,u[k]); });
   // Barra final: resolve em qualquer host estatico. O vercel.json
