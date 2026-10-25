@@ -9,6 +9,9 @@
    tipo        'prompt' | 'tutorial' | 'app'
    urlMaterial link externo onde o material de fato esta
    ativo       false tira do ar sem apagar a linha
+   proximo     (opcional) palavra do material seguinte da trilha
+   textoProximo (opcional) frase de ligacao exibida no bloco "Proximo elo"
+               O bloco so aparece se o material de `proximo` existir e estiver ativo.
    ============================================================ */
 export const MATERIAIS = [
   {
@@ -33,4 +36,12 @@ export function buscarMaterial(palavra){
 export function materialAtivo(palavra){
   const m = buscarMaterial(palavra);
   return (m && m.ativo) ? m : null;
+}
+
+/** Proximo material da trilha, so quando existe E esta ativo. */
+export function materialProximo(material){
+  if(!material || !material.proximo) return null;
+  const p = materialAtivo(material.proximo);
+  // Nunca aponta para ele mesmo.
+  return (p && p !== material) ? p : null;
 }

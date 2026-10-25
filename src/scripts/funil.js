@@ -7,6 +7,21 @@ import { buscarMaterial } from '../data/materiais.js';
 export const SEG_CONSTRUTORA = 'Construtora/incorporadora';
 const VERBAS_QUALIFICAM = ['R$2–10 mil','Acima de R$10 mil'];
 
+// Segmento viaja para a /entrega como ?s=<slug>, sem acento nem barra.
+const SLUG_SEGMENTO = {
+  'Construtora/incorporadora': 'construtora',
+  'Imobiliária':               'imobiliaria',
+  'Corretor autônomo':         'corretor',
+  'Marketing/outro':           'marketing'
+};
+/** Texto do segmento na mensagem de WhatsApp, a partir do slug. */
+export const TEXTO_SEGMENTO = {
+  construtora: 'construtora/incorporadora',
+  imobiliaria: 'imobiliária',
+  corretor:    'corretor autônomo',
+  marketing:   'marketing/outro'
+};
+
 /** Le ?m= da URL. Retorna null quando o parametro nao existe. */
 export function palavraDaUrl(){
   const m = new URLSearchParams(location.search).get('m');
@@ -107,10 +122,11 @@ export function aplicarSegmento(segmento){
 }
 
 /** Destino pos-envio, preservando os UTMs presentes na URL. */
-export function urlEntrega(palavra, qualificado){
+export function urlEntrega(palavra, qualificado, segmento){
   const q = new URLSearchParams();
   q.set('m', String(palavra).toUpperCase());
   q.set('q', qualificado ? '1' : '0');
+  if(SLUG_SEGMENTO[segmento]) q.set('s', SLUG_SEGMENTO[segmento]);
   const u = utms();
   Object.keys(u).forEach(k=>{ if(u[k]) q.set(k,u[k]); });
   // Barra final: resolve em qualquer host estatico. O vercel.json

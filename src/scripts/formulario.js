@@ -126,7 +126,7 @@ export function iniciarFormulario(){
     const txt=btn.innerHTML;
     const ok=()=>{
       if(funil){                               // funil: vai para a entrega
-        location.href = urlEntrega(funil.palavra, qualificado);
+        location.href = urlEntrega(funil.palavra, qualificado, segmento);
         return;
       }
       document.getElementById('ffields').style.display='none';
