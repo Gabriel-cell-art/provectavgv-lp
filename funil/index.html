@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Receba o material — Provecta VGV</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0A0F">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Inter auto-hospedada, variavel (um unico arquivo cobre todos os pesos),
+   subconjunto latino, font-display:swap e preload. Corpo usa a fonte do
+   sistema: nada alem do titulo espera por fonte. */
+@font-face{font-family:'Inter v';font-style:normal;font-weight:100 900;font-display:swap;
+  src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--preto:#0A0A0F;--azul:#2B9FF6;--azul-c:#6BBBF9;--linha:rgba(255,255,255,.12);
+  --t1:rgba(255,255,255,.94);--t2:rgba(255,255,255,.64);--t3:rgba(255,255,255,.5)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--preto);color:var(--t1);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;min-height:100svh}
+h1{font-family:'Inter v',system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;
+  line-height:1.1;font-size:clamp(26px,6.6vw,38px);margin:0}
+.wrap{width:min(100% - 40px,560px);margin-inline:auto}
+header{padding:18px 0;border-bottom:1px solid var(--linha)}
+.marca{display:inline-flex;align-items:center;gap:10px;font-weight:700;
+  letter-spacing:-.02em;font-size:15px}
+.lg{width:18px;height:22px;color:var(--azul);display:block}
+.marca b{font-size:11px;font-weight:500;color:var(--t3);letter-spacing:.14em}
+main{flex:1;padding:clamp(26px,7vw,44px) 0 40px}
+.prova{margin:14px 0 0;color:var(--t2);font-size:15px}
+form{margin-top:26px}
+.campo{margin-bottom:14px}
+.campo>label{display:block;font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:7px}
+input{width:100%;padding:13px 15px;border-radius:10px;background:rgba(255,255,255,.05);
+  border:1px solid var(--linha);color:inherit;font:inherit}
+input::placeholder{color:rgba(255,255,255,.32)}
+input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(43,159,246,.18)}
+.seg{display:flex;flex-wrap:wrap;gap:7px}
+.opt{padding:10px 14px;border-radius:999px;border:1px solid var(--linha);
+  font-size:14px;cursor:pointer;user-select:none}
+.opt[aria-checked=true]{background:var(--azul);border-color:var(--azul);
+  color:#04121f;font-weight:600}
+button{width:100%;margin-top:8px;padding:16px 24px;border:0;border-radius:999px;
+  background:var(--azul);color:#04121f;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+button:hover{background:var(--azul-c)}
+button[disabled]{opacity:.65;cursor:default}
+.consent{margin:12px 0 0;font-size:13px;color:var(--t3);line-height:1.5}
+.erro{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;
+  background:rgba(224,86,79,.12);border:1px solid rgba(224,86,79,.42)}
+.hp{position:absolute;left:-9999px;width:0;height:0;opacity:0}
+footer{border-top:1px solid var(--linha);padding:18px 0;color:var(--t3);font-size:13px}
+:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap"><span class="marca"><svg class="lg" viewBox="0 0 447 532" fill="currentColor" aria-hidden="true"><g transform="translate(0,532) scale(0.1,-0.1)"><path d="M1060 4930 l0 -270 -435 0 c-282 0 -435 -3 -435 -10 0 -5 15 -27 33 -47 18 -21 108 -130 198 -243 91 -113 309 -383 485 -600 176 -217 378 -467 449 -555 71 -88 177 -218 235 -290 59 -71 279 -344 490 -605 334 -413 670 -828 929 -1148 l75 -92 433 0 c237 0 434 4 437 9 3 4 -33 55 -80 112 -108 133 -116 143 -319 394 -249 309 -351 435 -534 659 -90 110 -243 299 -340 419 -97 120 -239 296 -316 392 -77 95 -220 271 -317 391 -91 113 -244 302 -340 420 -95 118 -199 247 -230 285 l-57 70 1158 3 c637 1 1160 0 1163 -2 2 -3 -75 -103 -172 -223 -98 -120 -182 -225 -189 -233 -7 -8 -42 -51 -78 -95 -197 -239 -449 -558 -448 -568 0 -15 420 -530 434 -533 6 -2 29 20 51 49 23 29 169 210 326 402 156 193 332 411 392 485 131 164 153 190 247 305 175 211 399 495 399 504 0 5 -51 67 -112 138 -62 71 -151 173 -198 226 l-84 97 -1453 0 -1453 0 0 -270z M1456 2233 c-43 -54 -85 -107 -94 -118 -56 -68 -203 -249 -293 -360 -58 -71 -129 -159 -158 -195 -29 -36 -113 -139 -186 -230 -73 -91 -239 -295 -369 -455 -130 -159 -236 -293 -236 -297 0 -3 37 -49 83 -100 45 -52 129 -148 186 -214 57 -65 113 -127 124 -136 18 -17 102 -18 1463 -18 l1444 0 0 275 0 275 -1170 0 c-643 0 -1170 3 -1170 6 0 6 109 142 375 469 260 320 499 615 513 635 11 15 -1 35 -107 166 -266 331 -314 389 -321 392 -4 1 -42 -41 -84 -95z"/></g></svg><span>Provecta <b>VGV</b></span></span></div></header>
+
+<main>
+  <div class="wrap">
+    <h1 id="tit">Receba o material agora</h1>
+    <script>/*__MAPA__*/(function(){
+      /* Sincrono, antes da pintura: o titulo ja nasce com o nome do material,
+         sem esperar modulo e sem deslocar layout. */
+      try{
+        var m = new URLSearchParams(location.search).get('m');
+        var n = (m && window.__MAT__) ? window.__MAT__[m.trim().toUpperCase()] : null;
+        if(n && n.t) document.getElementById('tit').textContent = 'Receba o material ' + n.t + ' agora';
+      }catch(e){}
+    })();</script>
+
+    <p class="prova">Método validado na operação própria: de 10 para 23 vendas/ano (+130%).</p>
+
+    <form id="f" novalidate>
+      <div class="campo"><label id="lSeg">Você é</label>
+        <div class="seg" id="seg" role="radiogroup" aria-labelledby="lSeg">
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Construtora/incorporadora</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Imobiliária</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Corretor autônomo</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Marketing/outro</span>
+        </div></div>
+
+      <div class="campo"><label for="nome">Nome</label>
+        <input id="nome" type="text" autocomplete="name" placeholder="Seu nome"></div>
+
+      <div class="campo"><label for="zap">WhatsApp</label>
+        <input id="zap" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(71) 9 0000-0000"></div>
+
+      <div class="campo" id="cEmp" hidden><label for="emp">Construtora</label>
+        <input id="emp" type="text" autocomplete="organization" placeholder="Empresa"></div>
+
+      <div class="campo" id="cEtapa" hidden><label id="lEtapa">Etapa do empreendimento</label>
+        <div class="seg" id="etapa" role="radiogroup" aria-labelledby="lEtapa">
+          <span class="opt" role="radio" tabindex="0" aria-checked="true">Pré-lançamento</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Lançamento</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Entrega</span>
+        </div></div>
+
+      <div class="campo" id="cVgv" hidden><label id="lVgv">VGV estimado</label>
+        <div class="seg" id="vgv" role="radiogroup" aria-labelledby="lVgv">
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">até 20mi</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="true">20–50mi</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">50–100mi</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">100mi+</span>
+        </div></div>
+
+      <div class="campo" id="cVerba" hidden><label id="lVerba">Investe em anúncios por mês</label>
+        <div class="seg" id="verba" role="radiogroup" aria-labelledby="lVerba">
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Não invisto</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Até R$2 mil</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">R$2–10 mil</span>
+          <span class="opt" role="radio" tabindex="0" aria-checked="false">Acima de R$10 mil</span>
+        </div></div>
+
+      <input class="hp" id="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button id="btn" type="submit">Receber material →</button>
+      <p class="consent">Ao enviar, você aceita receber contato da Provecta pelo WhatsApp.</p>
+    </form>
+  </div>
+</main>
+
+<footer><div class="wrap">Provecta VGV · Salvador</div></footer>
+
+<script type="module" src="/src/scripts/funil-pagina.js"></script>
+</body>
+</html>

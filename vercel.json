@@ -25,6 +25,16 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "m"
+        }
+      ],
+      "destination": "/funil/index.html"
+    },
+    {
       "source": "/entrega",
       "destination": "/entrega/index.html"
     }

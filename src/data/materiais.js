@@ -77,7 +77,9 @@ export function buscarMaterial(palavra){
   if(!palavra) return null;
   const chave = String(palavra).trim().toUpperCase();
   if(!chave) return null;
-  return MATERIAIS.find(m => m.palavra === chave) || null;
+  return MATERIAIS.find(m => m.palavra === chave)
+      || MATERIAIS.find(m => String(m.alias||'').trim().toUpperCase() === chave)
+      || null;
 }
 
 /** Material valido para entrega: existe E esta ativo. */
