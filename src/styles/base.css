@@ -30,6 +30,10 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
+/* O [hidden] do navegador e uma regra de baixa especificidade: qualquer
+   .btn{display:inline-flex} ou .campo{display:grid} a vence e o elemento
+   reaparece. Esta linha faz o atributo valer sempre. */
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;overflow-x:clip}
 body{
   margin:0;background:var(--preto);color:var(--texto);
