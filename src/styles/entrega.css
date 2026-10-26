@@ -152,7 +152,12 @@ html.rx-trava,html.rx-trava body{overflow:hidden}
 .ent-card.ent-clara .sub,.ent-card.ent-clara p,.ent-card.ent-clara li{color:var(--texto-2)}
 .ent-card.ent-clara .eyebrow{color:var(--azul)}
 .ent-card.ent-clara .eyebrow::before{background:var(--azul)}
-.ent-card.ent-clara .marca svg,.ent-card.ent-clara .lg{color:var(--azul)}
+/* A logo e a mesma nos dois fundos (medido nos arquivos enviados:
+   #28A0F8 nos dois). Trava o azul da marca para nao herdar o azul
+   escurecido que as secoes claras usam no texto. Logotipo e isento
+   da regra de contraste do WCAG. */
+.ent-card.ent-clara .marca svg,.ent-card.ent-clara .lg,
+.ent-card.ent-clara svg use{color:#2B9FF6}
 .ent-card.ent-clara input,.ent-card.ent-clara textarea{
   background:rgba(10,10,15,.04);border-color:rgba(10,10,15,.18);color:#0A0A0F}
 .ent-card.ent-clara .btn-fantasma{border-color:rgba(10,10,15,.3);color:#0A0A0F}

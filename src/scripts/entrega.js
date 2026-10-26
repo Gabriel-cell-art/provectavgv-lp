@@ -112,7 +112,12 @@ function montarSecoes(){
       case 'tutorial': {
         if(!secao.md) return;
         const estadoTut = estadoMaterial(material.palavra, leadId);
-        const bloco = montarTutorial(secao.md, estadoTut.ler());
+        // O quiz grava aninhado: { quiz: { respostas: {...} } }.
+        const respostasDoQuiz = () => {
+          const e = estadoTut.ler() || {};
+          return (e.quiz && e.quiz.respostas) || {};
+        };
+        const bloco = montarTutorial(secao.md, respostasDoQuiz());
         if(!bloco) return;
         const c = cartao(secao);
         c.append(bloco);
@@ -127,12 +132,16 @@ function montarSecoes(){
           if(e.target.closest('.tut-aba')) trocouNaMao = true;
         });
         if('IntersectionObserver' in window){
+          // Continua observando ate a resposta existir: o bloco pode entrar
+          // na tela antes de o lead terminar o quiz, logo acima.
           const obs = new IntersectionObserver(entradas => {
             if(!entradas.some(x => x.isIntersecting)) return;
+            if(trocouNaMao){ obs.disconnect(); return; }
+            const r = respostasDoQuiz();
+            if(!r.formato) return;              // ainda sem resposta: espera
             obs.disconnect();
-            if(trocouNaMao) return;
             const abas = [...bloco.querySelectorAll('.tut-aba')];
-            const i = abaInicial(lerAbas(secao.md), estadoTut.ler(), navigator.userAgent);
+            const i = abaInicial(lerAbas(secao.md), r, navigator.userAgent);
             if(abas[i] && abas[i].getAttribute('aria-selected') !== 'true') abas[i].click();
           }, { rootMargin:'0px 0px -20% 0px' });
           obs.observe(bloco);
