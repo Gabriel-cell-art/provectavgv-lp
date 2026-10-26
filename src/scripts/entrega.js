@@ -23,6 +23,7 @@ import { TEXTO_SEGMENTO } from './funil.js';
 import { WHATSAPP_NUMERO, AGENDA_URL, INSTAGRAM_URL } from '../config.js';
 import { estadoMaterial } from './armazem.js';
 import { h, linkWhatsapp, pixelContato } from './modelo.js';
+import { montarTutorial, abaInicial, lerAbas, reservarAltura } from './tutorial-abas.js';
 
 // Botao fixo de cada bloco de fechamento. O diagnostico so sai pela Agenda.
 const BOTAO_FECHAMENTO = {
@@ -33,14 +34,25 @@ const BOTAO_FECHAMENTO = {
 const ROTULO_TIPO = { prompt:'Prompt', tutorial:'Tutorial', app:'App' };
 const ROTULO_SECAO = {
   passos:'Passo a passo', material:'Material', proximo:'Próximo elo',
+  tutorial:'Como tirar a conversa do WhatsApp',
   qualificado:'Próximo passo', 'nao-qualificado':'Próximo passo'
+};
+
+// Alternancia preto/branco das secoes. Mapa explicito por nome: uma secao
+// escondida (proximo sem destino, por exemplo) nao desloca as seguintes.
+const FUNDO_SECAO = {
+  intro:'escura', passos:'escura', quiz:'clara', gerado:'escura',
+  tutorial:'clara', material:'escura', proximo:'clara',
+  qualificado:'escura', 'nao-qualificado':'escura'
 };
 
 const $ = id => document.getElementById(id);
 
 const q = new URLSearchParams(location.search);
 const palavra = (q.get('m') || '').trim();
-const qualificado = q.get('q') === '1';
+// Sem ?q= na URL (link recebido pelo nosso WhatsApp), o convite ao
+// diagnostico vale para todos. Com ?q=, respeita o valor.
+const qualificado = q.has('q') ? q.get('q') === '1' : true;
 const segmento = TEXTO_SEGMENTO[(q.get('s') || '').trim().toLowerCase()] || '';
 const leadId = ((q.get('l') || '').match(/^[\w-]{1,64}$/) || [''])[0];
 
@@ -71,10 +83,16 @@ function renderizar(md, classeBotao){
   return div;
 }
 
+function fundoDe(nome){
+  // So materiais com quiz entram no esquema alternado.
+  if(material.quiz !== true) return '';
+  return ' ent-' + (FUNDO_SECAO[nome] || 'escura');
+}
+
 function cartao(secao, extraClasse){
   const rotulo = material['rotulo_' + secao.nome] ||
                  (secao.nome === 'intro' ? (ROTULO_TIPO[material.tipo] || 'Material') : ROTULO_SECAO[secao.nome]);
-  return h('section', { class:'ent-card vidro' + (extraClasse ? ' ' + extraClasse : ''), 'data-secao':secao.nome },
+  return h('section', { class:'ent-card vidro' + fundoDe(secao.nome) + (extraClasse ? ' ' + extraClasse : ''), 'data-secao':secao.nome },
     rotulo ? h('span', { class:'eyebrow' }, rotulo) : null);
 }
 
@@ -87,8 +105,38 @@ function montarSecoes(){
     switch(secao.nome){
       case 'quiz': {
         if(material.quiz !== true) return;
-        blocoQuiz = h('section', { class:'ent-card vidro ent-quiz', id:'blocoQuiz', 'aria-live':'polite' });
+        blocoQuiz = h('section', { class:'ent-card vidro ent-quiz' + fundoDe('quiz'), id:'blocoQuiz', 'aria-live':'polite' });
         raiz.append(blocoQuiz);
+        return;
+      }
+      case 'tutorial': {
+        if(!secao.md) return;
+        const estadoTut = estadoMaterial(material.palavra, leadId);
+        const bloco = montarTutorial(secao.md, estadoTut.ler());
+        if(!bloco) return;
+        const c = cartao(secao);
+        c.append(bloco);
+        raiz.append(c);
+        reservarAltura(bloco);   // sincrono: antes de qualquer troca de aba
+
+        // A resposta do quiz so existe depois que o lead responde, acima
+        // nesta mesma pagina. Ao entrar na tela, reavalia a aba padrao —
+        // a menos que a pessoa ja tenha trocado de aba na mao.
+        let trocouNaMao = false;
+        bloco.addEventListener('click', e => {
+          if(e.target.closest('.tut-aba')) trocouNaMao = true;
+        });
+        if('IntersectionObserver' in window){
+          const obs = new IntersectionObserver(entradas => {
+            if(!entradas.some(x => x.isIntersecting)) return;
+            obs.disconnect();
+            if(trocouNaMao) return;
+            const abas = [...bloco.querySelectorAll('.tut-aba')];
+            const i = abaInicial(lerAbas(secao.md), estadoTut.ler(), navigator.userAgent);
+            if(abas[i] && abas[i].getAttribute('aria-selected') !== 'true') abas[i].click();
+          }, { rootMargin:'0px 0px -20% 0px' });
+          obs.observe(bloco);
+        }
         return;
       }
       case 'proximo': {

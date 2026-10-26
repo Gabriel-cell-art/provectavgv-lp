@@ -123,3 +123,48 @@ html.rx-trava,html.rx-trava body{overflow:hidden}
   .rx-fundo{align-items:center;padding:24px}
   .rx-caixa{max-width:540px;border-radius:18px;border-bottom:1px solid var(--linha);padding:34px 32px 30px}
 }
+
+/* ============================================================
+   TUTORIAL EM ABAS — reutilizavel por qualquer material.
+   Fonte de leitura confortavel no celular: 16px nos passos.
+   ============================================================ */
+.tut-abas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tut-aba{padding:10px 16px;border-radius:999px;border:1px solid var(--linha);
+  background:transparent;color:inherit;font:inherit;font-size:14px;cursor:pointer}
+.tut-aba[aria-selected=true]{background:var(--azul);border-color:var(--azul);
+  color:#04121f;font-weight:600}
+.tut-passos{margin:0;padding-left:1.35em;display:grid;gap:12px}
+.tut-passos li{font-size:16px;line-height:1.55}
+.tut-passos li::marker{font-variant-numeric:tabular-nums;color:var(--azul);font-weight:600}
+
+/* ============================================================
+   SECOES ALTERNANDO PRETO E BRANCO (materiais com quiz).
+   Cor solida, sem imagem: nao pesa a pagina.
+   ============================================================ */
+.ent-card.ent-clara{
+  --texto:rgba(10,10,15,.92); --texto-2:rgba(10,10,15,.68); --texto-3:rgba(10,10,15,.56);
+  --linha:rgba(10,10,15,.16); --azul:#1565B8;
+  background:#FFFFFF;border-color:rgba(10,10,15,.14);color:var(--texto);
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+}
+.ent-card.ent-clara h1,.ent-card.ent-clara h2,.ent-card.ent-clara h3,
+.ent-card.ent-clara strong{color:#0A0A0F}
+.ent-card.ent-clara .sub,.ent-card.ent-clara p,.ent-card.ent-clara li{color:var(--texto-2)}
+.ent-card.ent-clara .eyebrow{color:var(--azul)}
+.ent-card.ent-clara .eyebrow::before{background:var(--azul)}
+.ent-card.ent-clara .marca svg,.ent-card.ent-clara .lg{color:var(--azul)}
+.ent-card.ent-clara input,.ent-card.ent-clara textarea{
+  background:rgba(10,10,15,.04);border-color:rgba(10,10,15,.18);color:#0A0A0F}
+.ent-card.ent-clara .btn-fantasma{border-color:rgba(10,10,15,.3);color:#0A0A0F}
+.ent-card.ent-clara .btn-fantasma:hover{border-color:var(--azul);color:var(--azul)}
+.ent-card.ent-clara .btn-primario{background:var(--azul);color:#FFFFFF}
+.ent-card.ent-clara .tut-aba{border-color:rgba(10,10,15,.22);color:#0A0A0F}
+.ent-card.ent-clara .tut-aba[aria-selected=true]{background:var(--azul);
+  border-color:var(--azul);color:#FFFFFF}
+.ent-card.ent-clara .opt{border-color:rgba(10,10,15,.22);color:#0A0A0F}
+.ent-card.ent-clara .opt[aria-checked=true],.ent-card.ent-clara .opt.on{
+  background:var(--azul);border-color:var(--azul);color:#FFFFFF}
+
+/* Reserva de altura feita em JS logo apos a insercao (reservarAltura):
+   trocar de aba nao desloca o conteudo abaixo, e os paineis ocultos
+   continuam fora do layout, sem custo de renderizacao. */

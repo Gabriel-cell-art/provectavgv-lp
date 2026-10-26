@@ -1,0 +1,25 @@
+TODO CONTEUDO: este arquivo e um esqueleto provisorio. Substituir pelo texto
+real de [COLE AQUI O auditoria.prompt.txt]. Os marcadores {{...}} abaixo sao
+as cinco chaves do auditoria.quiz.json e podem ser reaproveitados.
+
+Quero auditar uma conversa real entre o meu comercial e um lead. Seu trabalho é apontar, mensagem a mensagem, onde o atendimento perdeu força e o que deveria ter sido dito ali. Este chat trata só desta conversa.
+
+O QUE EU INFORMEI
+- Tipo de produto: {{tipo}}
+- Faixa de preço: {{faixa_preco}}
+- Renda mínima aceita pelo comercial: {{renda_minima}}
+- Objetivo desta conversa: {{objetivo}}
+- Formato do que estou anexando: {{formato}}
+
+REGRAS DE EVIDÊNCIA
+- Cite a mensagem exata antes de cada crítica. Sem citação, não afirme.
+- Separe o que está na conversa do que é hipótese sua.
+- Não invente contexto que não aparece no material anexado.
+
+O QUE EU QUERO DE VOLTA
+1. [VAZAMENTO] — cada ponto em que o lead esfriou, com a mensagem citada.
+2. [FALA SUGERIDA] — o que caberia naquele momento, no contexto de preço e renda acima.
+3. [PADRÃO] — erros que se repetem e já são processo, não pessoa.
+4. Um resumo final em bloco único, pronto para copiar.
+
+Antes de começar, confira o que chegou e me pergunte o que faltar.

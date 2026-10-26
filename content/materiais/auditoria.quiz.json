@@ -1,0 +1,37 @@
+[
+  {
+    "chave": "tipo",
+    "texto": "Que tipo de produto é?",
+    "tipo": "unica",
+    "obrigatoria": true,
+    "opcoes": ["Apartamento", "Casa em condomínio", "Lote", "Segunda residência / praia", "Studio / compacto", "Comercial"]
+  },
+  {
+    "chave": "faixa_preco",
+    "texto": "Faixa de preço?",
+    "tipo": "unica",
+    "obrigatoria": true,
+    "opcoes": ["Até R$350 mil", "R$350–700 mil", "R$700 mil–1,5 mi", "R$1,5–3 mi", "Acima de R$3 mi"]
+  },
+  {
+    "chave": "renda_minima",
+    "texto": "Renda mínima que o comercial aceita?",
+    "tipo": "unica",
+    "obrigatoria": true,
+    "opcoes": ["Até R$5 mil", "R$5–10 mil", "R$10–20 mil", "R$20–40 mil", "Acima de R$40 mil", "Não sei"]
+  },
+  {
+    "chave": "objetivo",
+    "texto": "Qual era o objetivo dessa conversa?",
+    "tipo": "unica",
+    "obrigatoria": true,
+    "opcoes": ["Primeiro atendimento", "Agendar visita", "Enviar proposta ou simulação", "Reativar lead parado"]
+  },
+  {
+    "chave": "formato",
+    "texto": "Como você vai mandar a conversa?",
+    "tipo": "unica",
+    "obrigatoria": true,
+    "opcoes": ["Arquivo exportado do WhatsApp", "Prints"]
+  }
+]
