@@ -12,6 +12,7 @@ import { montarFunil, aplicarSegmento, ehQualificado, utms, urlEntrega,
          SEG_CONSTRUTORA } from './funil.js';
 import { novoId } from './envio.js';
 import { FORMSPREE, MAKE, WHATSAPP_NUMERO as WHATS } from '../config.js';
+import { linkWhatsapp, pixelContato } from './modelo.js';
 const DEBUG     = new URLSearchParams(location.search).has('debug');
 
 const TXT_WA = 'Olá! Vim pelo site da Provecta VGV e quero falar sobre um empreendimento.';
@@ -126,8 +127,16 @@ export function iniciarFormulario(){
 
     const txt=btn.innerHTML;
     const ok=()=>{
-      if(funil){                               // funil: vai para a entrega
-        location.href = urlEntrega(funil.palavra, qualificado, segmento, leadId);
+      if(funil){
+        // Material com whatsappMensagem: o cadastro ja foi, o lead segue
+        // para o WhatsApp da empresa com a mensagem pronta.
+        const m = funil.material;
+        if(m && m.ativo && m.whatsappMensagem){
+          pixelContato();
+          location.href = linkWhatsapp(WHATS, m.whatsappMensagem);
+          return;
+        }
+        location.href = urlEntrega(funil.palavra, qualificado, segmento, leadId);   // funil: vai para a entrega
         return;
       }
       document.getElementById('ffields').style.display='none';

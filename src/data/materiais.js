@@ -15,6 +15,8 @@
    tipo         'prompt' | 'tutorial' | 'app'
    ativo        false tira do ar sem apagar o arquivo
    urlMaterial  (opcional) link externo onde o material esta
+   whatsappMensagem (opcional) depois do cadastro na home, o lead vai ao
+                WhatsApp da empresa com esta mensagem, em vez da /entrega
    quiz         (opcional) true renderiza o quiz no marcador <!-- quiz -->
    proximo      (opcional) palavra do material seguinte da trilha
    textoProximo (opcional) frase do bloco "Proximo elo" quando o .md nao

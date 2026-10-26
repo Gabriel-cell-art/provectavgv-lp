@@ -4,4 +4,5 @@ descricao: Material de validação do funil. Usado só para conferir o fluxo pon
 tipo: prompt
 urlMaterial: https://example.com
 ativo: true
+whatsappMensagem: Olá, quero meus formulários gerando leads qualificados
 ---
