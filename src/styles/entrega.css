@@ -181,3 +181,64 @@ html.rx-trava,html.rx-trava body{overflow:hidden}
   letter-spacing:.15em;text-transform:uppercase;color:var(--azul)}
 .qz-proximo-btn{width:100%;justify-content:center}
 @media (min-width:560px){ .qz-proximo-btn{width:auto} }
+
+/* ============================================================
+   MODULO NUMERICO — tela de campos
+   ============================================================ */
+.num-tela{margin-top:4px}
+.num-grade{display:grid;gap:14px}
+@media (min-width:560px){ .num-grade{grid-template-columns:1fr 1fr} }
+.num-campo label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--texto-3);margin-bottom:7px}
+.num-linha{display:flex;align-items:stretch;gap:7px}
+.num-prefixo{display:flex;align-items:center;padding:0 11px;border-radius:10px;
+  border:1px solid var(--linha);font-family:var(--mono);font-size:14px;color:var(--texto-2)}
+.num-input{flex:1;min-width:0;padding:13px 14px;border-radius:10px;
+  background:rgba(127,127,127,.06);border:1px solid var(--linha);color:inherit;
+  font-family:var(--mono);font-size:16px}
+.num-input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(43,159,246,.18)}
+.num-input:disabled{opacity:.42}
+.num-nao-sei{padding:0 13px;border-radius:10px;border:1px solid var(--linha);
+  background:transparent;color:var(--texto-2);font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.num-nao-sei.on{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:600}
+.num-avisos{margin-top:14px}
+.num-aviso{margin:0;padding:11px 13px;border-radius:10px;font-size:14px;line-height:1.5;
+  background:rgba(214,158,46,.14);border:1px solid rgba(214,158,46,.5);color:inherit}
+
+/* ============================================================
+   FUNIL EM BARRAS — CSS puro, sem biblioteca de grafico
+   ============================================================ */
+.qz-resultado{margin-bottom:26px}
+.fn-destaque{margin:14px 0 22px;font-size:clamp(19px,4.6vw,26px);font-weight:800;
+  letter-spacing:-.02em;line-height:1.25}
+.fn-destaque p{margin:0}
+.fn-destaque b{color:var(--azul)}
+.fn-lista{list-style:none;margin:0;padding:0;display:grid;gap:15px}
+.fn-topo{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px}
+.fn-rotulo{font-size:14.5px;font-weight:600}
+.fn-qtd{font-family:var(--mono);font-size:14px;color:var(--texto-2)}
+.fn-trilho{height:10px;border-radius:999px;background:rgba(127,127,127,.16);overflow:hidden}
+.fn-barra{height:100%;border-radius:999px;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.fn-meta{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;
+  font-family:var(--mono);font-size:11.5px;color:var(--texto-3)}
+.fn-alerta{color:#B9791F;font-weight:500}
+
+/* Cores das etapas. Barras sao blocos solidos; os textos herdam o contraste
+   da secao, que e branca nos materiais com quiz. */
+.fn-azul{background:#2B9FF6}
+.fn-laranja{background:#D98324}
+.fn-roxo{background:#8B6FD6}
+.fn-cinza{background:rgba(127,127,127,.42)}
+.fn-tracejado{background:repeating-linear-gradient(90deg,
+  rgba(127,127,127,.34) 0 6px,transparent 6px 12px)}
+.fn-azul-txt{color:#1565B8}
+.fn-laranja-txt{color:#9A5B12;font-weight:500}
+.fn-roxo-txt{color:#6446B0}
+
+.fn-legenda{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:20px;
+  font-family:var(--mono);font-size:11px;color:var(--texto-3)}
+.fn-leg{display:inline-flex;align-items:center;gap:6px}
+.fn-leg i{width:14px;height:8px;border-radius:999px;display:block}
+.fn-notas{margin-top:16px;display:grid;gap:7px}
+.fn-notas p{margin:0;font-size:12.5px;line-height:1.5;color:var(--texto-3)}
+@media (prefers-reduced-motion:reduce){ .fn-barra{transition:none} }

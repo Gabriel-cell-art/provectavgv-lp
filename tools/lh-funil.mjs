@@ -1,6 +1,6 @@
 import lighthouse from 'lighthouse';
 import { launch } from 'chrome-launcher';
-const alvo = process.argv[2] || 'http://localhost:4601/?m=PUBLICO';
+const alvo = process.argv[2] || 'http://localhost:4901/?m=PUBLICO';
 const chrome=await launch({chromePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
   chromeFlags:['--headless=new','--no-sandbox','--ignore-certificate-errors','--disable-dev-shm-usage']});
 const r=await lighthouse(alvo,{port:chrome.port,output:'json',logLevel:'error',

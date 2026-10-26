@@ -12,6 +12,9 @@
    que volta do app do Claude encontrar o prompt pronto.
    ============================================================ */
 import { h, trocar, preencher, marcadores } from './modelo.js';
+import { calcularFunil, textoNumeros, textoCalculos, textoComparacao } from './numeros.js';
+import { telaNumeros, funilVisual } from './numeros-ui.js';
+import referencias from '../../content/referencias.json';
 import { copiarTexto, selecionar } from './copiar.js';
 import { enviarRespostas } from './envio.js';
 
@@ -64,6 +67,10 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
   }
 
   function valido(p){
+    if(p.tipo === 'numeros'){
+      const v = respostas[p.chave] || {};
+      return !p.obrigatoria || Object.values(v).some(x => !vazio(x));
+    }
     return !p.obrigatoria || !vazio(respostas[p.chave]);
   }
 
@@ -78,14 +85,32 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
     else concluir();
   }
 
+  /** Resultado do modulo numerico, quando o quiz tem tela de numeros. */
+  function calcular(){
+    const pNum = perguntas.find(x => x.tipo === 'numeros');
+    if(!pNum) return null;
+    const brutos = respostas[pNum.chave] || {};
+    return calcularFunil({
+      numeros: brutos, referencias,
+      canal: respostas.canal, faixaPreco: respostas.faixa_preco
+    });
+  }
+
   function concluir(){
     const valores = valoresPrompt(quiz, respostas);
+    const r = calcular();
+    if(r){
+      // Os tres marcadores sao montados em texto aqui, pelo site.
+      valores.numeros    = textoNumeros(r);
+      valores.calculos   = textoCalculos(r);
+      valores.comparacao = textoComparacao(r);
+    }
     const prompt = preencher(modelo, valores);
     salvar({ prompt, concluido:true });
     const nome = valores[perguntas[0] && perguntas[0].chave] || '';
     enviarRespostas('quiz', ctx, valores,
       'Quiz ' + ctx.palavra + ' — ' + (nome || 'sem nome') + ' · lead ' + (ctx.leadId || 'sem id').slice(0,8));
-    desenharPrompt(prompt, true);
+    desenharPrompt(prompt, true, r);
   }
 
   function desenharPergunta(focar){
@@ -100,7 +125,15 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
                : (p.obrigatoria ? '' : 'Opcional');
 
     let campo;
-    if(p.tipo === 'texto'){
+    if(p.tipo === 'numeros'){
+      // Tela unica com os campos do modulo numerico.
+      campo = telaNumeros(p, respostas[p.chave] || {}, valores => {
+        respostas[p.chave] = valores;
+        salvar();
+        raiz.querySelector('.qz-erro').textContent = '';
+        atualizarSeguir();
+      });
+    }else if(p.tipo === 'texto'){
       // Textarea que cresce: placeholder longo nao some cortado no celular.
       campo = h('textarea', {
         class:'qz-input', id:'qzCampo', 'aria-labelledby':'qzPergunta', rows:'1',
@@ -193,7 +226,7 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
     }
   }
 
-  function desenharPrompt(prompt, focar){
+  function desenharPrompt(prompt, focar, resultado){
     const aviso = h('p', { class:'qz-aviso', role:'status', 'aria-live':'polite' });
     const caixa = h('pre', { class:'qz-prompt', tabindex:'0', 'aria-label':'Prompt gerado' }, prompt);
     let timer = null;
@@ -215,7 +248,11 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
       if(ctx.aoCopiar) ctx.aoCopiar();
     }}, T.botaoCopiar);
 
-    trocar(raiz, 
+    trocar(raiz,
+      // Resultado visual primeiro: o numero antes do texto do prompt.
+      resultado ? h('div', { class:'qz-resultado' },
+        h('span', { class:'eyebrow' }, 'Seu funil'),
+        funilVisual(resultado)) : null,
       h('span', { class:'eyebrow' }, 'Prompt gerado'),
       h('h2', { id:'qzTituloPrompt', tabindex:'-1' }, T.tituloPrompt),
       copiar,
@@ -244,7 +281,7 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
 
   // Volta exatamente onde parou: prompt pronto ou a pergunta em que estava.
   if(salvo.concluido){
-    desenharPrompt(preencher(modelo, valoresPrompt(quiz, respostas)) || salvo.prompt, false);
+    desenharPrompt(preencher(modelo, valoresPrompt(quiz, respostas)) || salvo.prompt, false, calcular());
   }else{
     desenharPergunta(false);
   }

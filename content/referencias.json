@@ -1,0 +1,23 @@
+{
+  "fonte": "Media da operacao propria Provecta. Sem tamanho de amostra registrado.",
+  "ticket": { "min": 250000, "max": 1600000, "rotulo": "R$250 mil a R$1,6 milhão" },
+  "avisos": {
+    "amostra": "São médias da nossa operação, sem amostra estatística: servem como ordem de grandeza. Produto, praça e ticket mudam o número.",
+    "cadeia": "Parte das vendas vem de leads fora do critério de qualificado, então as taxas não fecham em sequência.",
+    "ticketFora": "ticket diferente da nossa média: compare com ainda mais cuidado",
+    "ticketIgnorado": "faixa de preço não informada: não dá para saber se o ticket está na faixa da média",
+    "canalMisto": "canais misturados: a comparação perde precisão",
+    "canalNaoAplica": "média de formulário, não se aplica a este canal"
+  },
+  "metricas": {
+    "custo_lead":        { "rotulo":"Custo por lead",        "tipo":"custo", "min":20.70, "max":24.80, "canal":"formulario" },
+    "custo_conversa":    { "rotulo":"Custo por conversa",    "tipo":"custo", "min":12.93, "max":19.15, "canal":"whatsapp" },
+    "pct_qualificados":  { "rotulo":"Qualificados ÷ leads",  "tipo":"taxa",  "min":26,    "max":31,    "canal":"formulario" },
+    "custo_qualificado": { "rotulo":"Custo por qualificado", "tipo":"custo", "cerca":80,  "canal":"formulario" },
+    "lead_venda":        { "rotulo":"Vendas ÷ leads",        "tipo":"taxa",  "min":1.25,  "max":1.5,   "canal":"formulario" },
+    "qualificado_venda": { "rotulo":"Vendas ÷ qualificados", "tipo":"taxa",  "min":3,     "max":4,     "canal":"formulario" },
+    "midia_venda":       { "rotulo":"Investimento ÷ vendas", "tipo":"custo", "cerca":2000, "canal":"formulario" }
+  },
+  "semMedia": ["responderam","visitas_agendadas","visitas_realizadas","propostas"],
+  "toleranciaCerca": 0.15
+}
