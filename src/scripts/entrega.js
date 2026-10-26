@@ -98,6 +98,12 @@ function cartao(secao, extraClasse){
 
 /* ---------- material com secoes (.md completo) ---------- */
 function montarSecoes(){
+  // Materiais com secoes montam tudo a partir do .md: os blocos estaticos do
+  // HTML nao sao usados. Remover do DOM em vez de deixar escondidos — foi
+  // justamente um [hidden] vencido por CSS que deixou um botao morto no ar.
+  ['blocoMaterial','blocoProximo','blocoAgenda','blocoIndisponivel']
+    .forEach(id => { const el = $(id); if(el) el.remove(); });
+
   const raiz = $('entConteudo');
   let blocoQuiz = null;
 
@@ -232,8 +238,12 @@ function montarSimples(){
   $('entTipo').textContent      = ROTULO_TIPO[material.tipo] || 'Material';
   $('entTitulo').textContent    = material.titulo;
   $('entDescricao').textContent = material.descricao || '';
+  // Sem urlMaterial nao ha o que abrir. Remover do DOM, e nao so esconder:
+  // o botao tem target="_blank" e href="#", entao se qualquer regra de CSS
+  // vencer o [hidden] ele volta a aparecer e abre a propria pagina numa
+  // guia nova. Remover nao depende de estilo nenhum.
   if(material.urlMaterial) $('entBotao').href = material.urlMaterial;
-  else $('entBotao').hidden = true;
+  else $('entBotao').remove();
   $('blocoMaterial').hidden     = false;
 
   // Proximo elo: para todos, mas so se o destino existe e esta ativo.
