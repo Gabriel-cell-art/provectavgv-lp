@@ -173,3 +173,11 @@ html.rx-trava,html.rx-trava body{overflow:hidden}
 /* Reserva de altura feita em JS logo apos a insercao (reservarAltura):
    trocar de aba nao desloca o conteudo abaixo, e os paineis ocultos
    continuam fora do layout, sem custo de renderizacao. */
+
+/* Atalho do proximo elo dentro do cartao do prompt: separado por uma linha
+   para nao competir com o botao Copiar, que segue sendo a acao principal. */
+.qz-proximo{margin-top:22px;padding-top:20px;border-top:1px solid var(--linha)}
+.qz-proximo-rotulo{margin:0 0 10px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--azul)}
+.qz-proximo-btn{width:100%;justify-content:center}
+@media (min-width:560px){ .qz-proximo-btn{width:auto} }

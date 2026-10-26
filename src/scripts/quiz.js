@@ -222,6 +222,15 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
       aviso,
       caixa,
       h('p', { class:'qz-dica qz-dica-claude' }, T.dica),
+      // Atalho para o proximo material, no mesmo cartao do prompt.
+      ctx.proximo ? h('div', { class:'qz-proximo' },
+        h('p', { class:'qz-proximo-rotulo' }, 'Próximo elo · pelo WhatsApp'),
+        h('a', { class:'btn btn-fantasma qz-proximo-btn', href:ctx.proximo.href,
+                 target:'_blank', rel:'noopener',
+                 onclick: ctx.proximo.aoClicar || null },
+          'Pedir ' + ctx.proximo.titulo + ' ',
+          h('span', { class:'seta' }, '→'))
+      ) : null,
       h('button', { type:'button', class:'btn btn-fantasma qz-refazer', onclick:()=>{
         ctx.estado.juntar({ prompt:null, concluido:false });
         irPara(0);

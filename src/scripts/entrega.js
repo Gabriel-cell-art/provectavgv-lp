@@ -212,8 +212,18 @@ async function iniciarQuiz(bloco, raiz){
     mensagemProximo
   }));
 
+  // Atalho do proximo elo dentro do proprio cartao do prompt: o lead nao
+  // precisa procurar o bloco la embaixo para pedir o material seguinte.
+  const destinoProx = buscarMaterial(material.proximo);
+  const proximo = temProximo(material) ? {
+    titulo: (destinoProx && destinoProx.titulo) || String(material.proximo).toUpperCase(),
+    href:   linkWhatsapp(WHATSAPP_NUMERO, mensagemProximo()),
+    aoClicar: pixelContato
+  } : null;
+
   montarQuiz(bloco, dados.quiz, dados.prompt, Object.assign({}, contexto, {
-    aoCopiar: popup.aoCopiar
+    aoCopiar: popup.aoCopiar,
+    proximo
   }));
 }
 
