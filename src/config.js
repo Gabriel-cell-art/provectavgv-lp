@@ -6,16 +6,20 @@
    ============================================================ */
 
 // Formato internacional exigido pelo wa.me: 55 + DDD + numero, so digitos.
-// Usado pela /entrega (Proximo elo e pop-up de diagnostico).
+// Unico numero do site: home, Proximo elo e pop-up de diagnostico.
 export const WHATSAPP_NUMERO = '5571993068515';
+
+// Botao do bloco qualificado (q=1): o unico caminho para o diagnostico.
+export const AGENDA_URL = 'https://calendar.app.google/3wJX8SBvu4HLUA8z5';
+// Botao do bloco nao qualificado (q=0).
+export const INSTAGRAM_URL = 'https://instagram.com/provecta.vgv';
 
 // Destino dos leads: o mesmo do formulario da home.
 export const FORMSPREE = 'https://formspree.io/f/mljdbbkw';
 export const MAKE      = 'https://hook.us2.make.com/pybg5rima742nx5l2brpvj7cfe9oa18g';
 
-// Respostas de quiz e pop-up tambem vao para o Formspree (um e-mail por envio).
-// O plano free limita a 50 envios/mes somando tudo: com cadastro + quiz +
-// pop-up, cada lead pode gastar 3. Troque para false para mandar so ao Make.
-export const RESPOSTAS_NO_FORMSPREE = true;
+// Respostas de quiz e pop-up vao so para o Make. Com true, tambem vao ao
+// Formspree (um e-mail por envio, dentro do limite de 50/mes do plano free).
+export const RESPOSTAS_NO_FORMSPREE = false;
 
 export const ORIGEM = 'funil-ia';

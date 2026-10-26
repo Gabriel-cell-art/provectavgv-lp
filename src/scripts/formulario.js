@@ -11,8 +11,7 @@
 import { montarFunil, aplicarSegmento, ehQualificado, utms, urlEntrega,
          SEG_CONSTRUTORA } from './funil.js';
 import { novoId } from './envio.js';
-import { FORMSPREE, MAKE } from '../config.js';
-const WHATS     = '557193068515';
+import { FORMSPREE, MAKE, WHATSAPP_NUMERO as WHATS } from '../config.js';
 const DEBUG     = new URLSearchParams(location.search).has('debug');
 
 const TXT_WA = 'Olá! Vim pelo site da Provecta VGV e quero falar sobre um empreendimento.';

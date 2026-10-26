@@ -29,6 +29,7 @@
     { "chave": "gargalo", "texto": "Onde sua venda trava mais hoje?",
       "opcoes": ["Chega pouco lead", "Chega lead ruim", "Lead bom não vira visita", "Visita não vira venda", "Não sei onde quebra"],
       "sempre": true,
+      "nuncaOrganizada": ["Não sei onde quebra"],
       "vazamento": {
         "Chega pouco lead": ["CAPTAR"],
         "Chega lead ruim": ["POSICIONAR"],
@@ -47,17 +48,7 @@
     "textoOrganizada": "Você apontou o gargalo em {{gargalo}}. O diagnóstico confirma com os seus números onde está o próximo ganho. São 30 minutos, de graça."
   },
 
-  "botaoDiagnostico": "Quero meu diagnóstico gratuito →",
   "botaoProximo": "Pedir o próximo material →",
-
-  "mensagemDiagnostico": [
-    "Oi! {{acao}}.",
-    "Sou {{segmento}}.",
-    "Meu maior gargalo hoje: {{gargalo}}.",
-    "Primeiro contato: {{primeiro_contato}}.",
-    "Quero o diagnóstico gratuito."
-  ],
-  "acaoPadrao": "Vim do material {{palavra}}",
 
   "cartao": {
     "titulo": "Raio-X da sua operação em 30 segundos",

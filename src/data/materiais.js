@@ -19,12 +19,11 @@
    proximo      (opcional) palavra do material seguinte da trilha
    textoProximo (opcional) frase do bloco "Proximo elo" quando o .md nao
                 tem a secao <!-- proximo -->
-   acaoWhatsapp (opcional) frase do pop-up de diagnostico, com {{chave}}
-                do quiz. Ex.: Fiz o estudo de público do {{nome}}
    rotulo_<secao> (opcional) troca o rotulo pequeno acima de uma secao
 
-   O bloco "Proximo elo" so aparece se o material de `proximo`
-   existir e estiver ativo.
+   O bloco "Proximo elo" aparece sempre que `proximo` estiver preenchido,
+   porque o pedido e feito pelo WhatsApp. So some se o destino existir
+   aqui e estiver com ativo: false.
    ============================================================ */
 
 const ARQUIVOS = import.meta.glob('/content/materiais/*.md',
@@ -93,6 +92,18 @@ export function materialProximo(material){
   return (p && p !== material) ? p : null;
 }
 
+/**
+ * Ha proximo elo para pedir? O destino nao precisa estar neste repo
+ * (o material e entregue pelo WhatsApp); so bloqueia se ele existir
+ * aqui desativado, ou se apontar para o proprio material.
+ */
+export function temProximo(material){
+  if(!material || !material.proximo) return false;
+  const p = buscarMaterial(material.proximo);
+  if(!p) return true;
+  return p !== material && p.ativo === true;
+}
+
 // Quiz e prompt so carregam na /entrega, e so os do material aberto.
 const QUIZES  = import.meta.glob('/content/materiais/*.quiz.json', { import:'default' });
 const PROMPTS = import.meta.glob('/content/materiais/*.prompt.txt',
@@ -103,6 +114,9 @@ export async function carregarQuiz(material){
   const base = '/content/materiais/' + material.arquivo;
   const q = QUIZES[base + '.quiz.json'], p = PROMPTS[base + '.prompt.txt'];
   if(!q || !p) return null;
-  const [quiz, prompt] = await Promise.all([q(), p()]);
+  const [bruto, prompt] = await Promise.all([q(), p()]);
+  // Aceita a lista de perguntas pura ou { titulo, perguntas, textos }.
+  const quiz = Array.isArray(bruto) ? { perguntas:bruto } : Object.assign({}, bruto);
+  if(!quiz.titulo) quiz.titulo = material.titulo;
   return { quiz, prompt };
 }

@@ -57,7 +57,8 @@
 .qz-pergunta{font-size:clamp(22px,6vw,30px);margin:22px 0 0;outline:none}
 .qz-dica{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
   color:var(--texto-3);margin-top:10px}
-.qz-input{width:100%;margin-top:18px;padding:15px 16px;border-radius:10px;font-size:16px;
+.qz-input{display:block;width:100%;margin-top:18px;padding:15px 16px;border-radius:10px;font-size:16px;
+  line-height:1.45;resize:none;overflow:hidden;font-family:inherit;color:inherit;
   background:rgba(255,255,255,.04);border:1px solid var(--linha);transition:border-color .2s,box-shadow .2s}
 .qz-input::placeholder{color:rgba(255,255,255,.3)}
 .qz-input:focus{outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(43,159,246,.16)}

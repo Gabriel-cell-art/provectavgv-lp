@@ -18,13 +18,17 @@ import '../styles/base.css';
 import '../styles/secoes.css';
 import '../styles/entrega.css';
 import { marked } from 'marked';
-import { materialAtivo, materialProximo, carregarQuiz } from '../data/materiais.js';
+import { materialAtivo, materialProximo, buscarMaterial, temProximo, carregarQuiz } from '../data/materiais.js';
 import { TEXTO_SEGMENTO } from './funil.js';
-import { WHATSAPP_NUMERO } from '../config.js';
+import { WHATSAPP_NUMERO, AGENDA_URL, INSTAGRAM_URL } from '../config.js';
 import { estadoMaterial } from './armazem.js';
-import { h, preencher, linkWhatsapp, pixelContato } from './modelo.js';
+import { h, linkWhatsapp, pixelContato } from './modelo.js';
 
-const INSTAGRAM = 'https://instagram.com/provecta.vgv';
+// Botao fixo de cada bloco de fechamento. O diagnostico so sai pela Agenda.
+const BOTAO_FECHAMENTO = {
+  qualificado:       { texto:'Agendar diagnóstico gratuito', href:AGENDA_URL,    classe:'btn-primario' },
+  'nao-qualificado': { texto:'Ver @provecta.vgv no Instagram', href:INSTAGRAM_URL, classe:'btn-fantasma' }
+};
 
 const ROTULO_TIPO = { prompt:'Prompt', tutorial:'Tutorial', app:'App' };
 const ROTULO_SECAO = {
@@ -44,7 +48,7 @@ const material = materialAtivo(palavra);
 
 /** Mensagem do Proximo elo. Depende so das palavras, nao do destino existir. */
 function mensagemProximo(){
-  if(!material || !material.proximo) return null;
+  if(!temProximo(material)) return null;
   const atual = material.palavra;
   const prox  = String(material.proximo).trim().toUpperCase();
   return 'Oi! Vim do material ' + atual +
@@ -88,8 +92,11 @@ function montarSecoes(){
         return;
       }
       case 'proximo': {
-        if(!materialProximo(material)) return;   // destino precisa existir e estar ativo
+        if(!temProximo(material)) return;
         const c = cartao(secao);
+        // Sem titulo no .md, usa o titulo do destino quando ele existe aqui.
+        const destino = buscarMaterial(material.proximo);
+        if(!/^#{1,3}\s/m.test(secao.md) && destino && destino.titulo) c.append(h('h2', null, destino.titulo));
         c.append(renderizar(secao.md, 'btn-fantasma'),
           h('a', { class:'btn btn-fantasma ent-cta', target:'_blank', rel:'noopener',
                    href:linkWhatsapp(WHATSAPP_NUMERO, mensagemProximo()), onclick:pixelContato },
@@ -101,7 +108,14 @@ function montarSecoes(){
       case 'nao-qualificado': {
         if((secao.nome === 'qualificado') !== qualificado) return;
         const c = cartao(secao, qualificado ? 'ent-agenda' : '');
-        c.append(renderizar(secao.md, qualificado ? 'btn-primario' : 'btn-fantasma'));
+        const b = BOTAO_FECHAMENTO[secao.nome];
+        const corpo = renderizar(secao.md, b.classe);
+        c.append(corpo);
+        // O .md pode trazer o proprio botao; sem ele, entra o padrao.
+        if(!corpo.querySelector('.ent-acao')){
+          c.append(h('a', { class:'btn ' + b.classe + ' ent-cta', href:b.href, target:'_blank', rel:'noopener' },
+            b.texto + ' ', h('span', { class:'seta' }, '→')));
+        }
         raiz.append(c);
         return;
       }
@@ -137,16 +151,8 @@ async function iniciarQuiz(bloco, raiz){
   raiz.append(cartaoRaioX);
 
   const popup = iniciarPopup(Object.assign({}, contexto, {
-    qualificado, segmento,
     cartao: cartaoRaioX,
-    mensagemProximo,
-    acao: ()=>{
-      if(!material.acaoWhatsapp) return '';
-      const valores = Object.assign({ palavra:material.palavra }, estado.ler().quiz?.respostas);
-      const vazio = [...material.acaoWhatsapp.matchAll(/\{\{\s*([\w-]+)\s*\}\}/g)]
-        .some(m => !String(valores[m[1]] || '').trim());
-      return vazio ? '' : preencher(material.acaoWhatsapp, valores).trim();
-    }
+    mensagemProximo
   }));
 
   montarQuiz(bloco, dados.quiz, dados.prompt, Object.assign({}, contexto, {
@@ -176,6 +182,7 @@ function montarSimples(){
   }
 
   // Agenda so para lead qualificado, e so quando ha material para entregar.
+  $('entAgenda').href = AGENDA_URL;
   if(qualificado) $('blocoAgenda').hidden = false;
 }
 
@@ -185,7 +192,7 @@ if(material){
   else montarSimples();
 }else{
   // Palavra inexistente ou material inativo.
-  $('entInsta').href          = INSTAGRAM;
+  $('entInsta').href          = INSTAGRAM_URL;
   $('blocoIndisponivel').hidden = false;
 }
 

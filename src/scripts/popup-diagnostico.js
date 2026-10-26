@@ -30,24 +30,17 @@ export function calcularVazamento(cfg, respostas){
   });
   const ordem = cfg.elos || [];
   const lista = ordem.filter(x=>elos.has(x)).concat([...elos].filter(x=>!ordem.includes(x)));
-  return { n:acesos.length, elos:lista, acesos, soSempre: acesos.every(p=>p.sempre) };
-}
-
-/** Partes da mensagem com marcador vazio saem inteiras. */
-function montarMensagem(partes, valores){
-  return partes.filter(parte=>{
-    const ks = [...parte.matchAll(/\{\{\s*([\w-]+)\s*\}\}/g)].map(m=>m[1]);
-    return ks.every(k => valores[k] != null && String(valores[k]).trim() !== '');
-  }).map(parte => preencher(parte, valores)).join(' ');
+  // "Organizada" so quando os sinais acesos sao todos dos que sempre acendem
+  // (o gargalo) e nenhuma resposta esta marcada como nuncaOrganizada.
+  const organizada = acesos.every(p => p.sempre &&
+    !(p.nuncaOrganizada || []).includes(respostas[p.chave]));
+  return { n:acesos.length, elos:lista, acesos, organizada };
 }
 
 /**
  * ctx: {
  *   palavra, leadId, estado,
- *   qualificado,        q=1
- *   segmento,           texto por extenso ou ''
- *   acao: () => string  frase "Fiz o ..." ja preenchida, ou ''
- *   mensagemProximo: () => string|null
+ *   mensagemProximo: () => string|null   pedido do proximo material
  *   cartao              elemento <section> no fim da pagina
  * }
  */
@@ -171,7 +164,7 @@ export function iniciarPopup(ctx){
     const r = calcularVazamento(cfg, resp);
     const gargalo = minuscula(resp.gargalo || '');
     let titulo, blocos;
-    if(r.n > 0 && !r.soSempre){
+    if(r.n > 0 && !r.organizada){
       titulo = preencher(r.n === 1 ? R.tituloUmSinal : R.tituloSinais, { n:r.n, elos:listar(r.elos) });
       blocos = [
         h('ul', { class:'rx-frases' }, r.acesos.map(p =>
@@ -183,20 +176,13 @@ export function iniciarPopup(ctx){
       blocos = [ h('p', { class:'sub' }, preencher(R.textoOrganizada, { gargalo })) ];
     }
 
-    // q=1 pede o diagnostico; q=0 pede o proximo material (se houver).
-    const msgProximo = !ctx.qualificado && ctx.mensagemProximo ? ctx.mensagemProximo() : null;
-    let rotulo, mensagem;
-    if(msgProximo){
-      rotulo = cfg.botaoProximo; mensagem = msgProximo;
-    }else{
-      rotulo = cfg.botaoDiagnostico;
-      const acao = ctx.acao() || preencher(cfg.acaoPadrao, { palavra:ctx.palavra });
-      mensagem = montarMensagem(cfg.mensagemDiagnostico, {
-        acao, segmento:ctx.segmento, gargalo:resp.gargalo, primeiro_contato:resp.primeiro_contato
-      });
-    }
-    const botao = h('a', { class:'btn btn-primario rx-cta', href:linkWhatsapp(WHATSAPP_NUMERO, mensagem),
-                           target:'_blank', rel:'noopener', onclick:pixelContato }, rotulo);
+    // O WhatsApp do pop-up so pede o proximo material. O diagnostico sai
+    // pela Agenda, no bloco qualificado. Sem proximo elo, sem botao.
+    const mensagem = ctx.mensagemProximo ? ctx.mensagemProximo() : null;
+    const botao = mensagem
+      ? h('a', { class:'btn btn-primario rx-cta', href:linkWhatsapp(WHATSAPP_NUMERO, mensagem),
+                 target:'_blank', rel:'noopener', onclick:pixelContato }, cfg.botaoProximo)
+      : null;
 
     trocar(alvo, 
       h('span', { class:'eyebrow' }, 'Raio-X'),

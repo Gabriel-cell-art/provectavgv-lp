@@ -101,12 +101,26 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
 
     let campo;
     if(p.tipo === 'texto'){
-      campo = h('input', {
-        class:'qz-input', type:'text', id:'qzCampo', 'aria-labelledby':'qzPergunta',
-        placeholder:p.placeholder || '', autocomplete:'off', enterkeyhint: ultima ? 'done' : 'next',
-        value: valor || ''
+      // Textarea que cresce: placeholder longo nao some cortado no celular.
+      campo = h('textarea', {
+        class:'qz-input', id:'qzCampo', 'aria-labelledby':'qzPergunta', rows:'1',
+        placeholder:p.placeholder || '', autocomplete:'off', enterkeyhint: ultima ? 'done' : 'next'
+      });
+      campo.value = valor || '';
+      const crescer = ()=>{
+        campo.style.height = 'auto';
+        const ph = campo.value ? 0 : campo.dataset.alturaPh || 0;
+        const borda = campo.offsetHeight - campo.clientHeight;   // border-box
+        campo.style.height = (Math.max(campo.scrollHeight, ph) + borda) + 'px';
+      };
+      requestAnimationFrame(()=>{
+        // Altura minima para o placeholder inteiro caber.
+        if(!campo.value && campo.placeholder){ campo.value = campo.placeholder; campo.style.height='auto';
+          campo.dataset.alturaPh = campo.scrollHeight; campo.value = ''; }
+        crescer();
       });
       campo.addEventListener('input', ()=>{
+        crescer();
         respostas[p.chave] = campo.value; salvar();
         raiz.querySelector('.qz-erro').textContent = '';
         atualizarSeguir();

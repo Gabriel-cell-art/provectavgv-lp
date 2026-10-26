@@ -1,54 +1,68 @@
 ---
-titulo: Estudo de público com IA
-descricao: Um prompt montado com os dados do seu empreendimento para o Claude dizer quem tem motivo e condição de comprar antes de você investir em anúncio.
-tipo: prompt
+palavra: PUBLICO
+titulo: Estudo de público
+descricao: O prompt que a gente usa para estudar o público de cada imóvel antes de anunciar, montado com as suas respostas.
 ativo: true
 quiz: true
 proximo: FORMULARIO
-acaoWhatsapp: Fiz o estudo de público do {{nome}}
-rotulo_material: Como ler o resultado
 ---
 
 <!-- intro -->
-# Estudo de público com IA
+# Seu estudo de público está aqui
 
-Responda 10 perguntas sobre o empreendimento e receba um prompt pronto para o Claude. Ele monta o estudo de público antes de você investir em anúncio: quem tem motivo e condição de comprar, quem não tem e o que ainda precisa ser provado.
+É o mesmo processo que a gente roda antes de qualquer campanha. Responde o quiz e o prompt sai pronto, com os dados do seu imóvel.
 
 <!-- passos -->
-## Como usar
-
-1. Responda as perguntas abaixo. Leva uns 3 minutos.
-2. Copie o prompt gerado.
-3. Abra o Claude, crie um projeto novo e cole o prompt.
-4. Anexe ficha, tabela ou book, se tiver. Sem anexo, o Claude pede o que falta antes de concluir.
-5. Responda à checagem que ele fizer. Só depois ele entrega o estudo.
+1. Responda o quiz sobre o seu imóvel.
+2. Copie o prompt, abra um chat novo no Claude, cole e anexe o que você marcou.
+3. Antes de gastar, valide cada hipótese. As perguntas de formulário que saírem vão para o próximo material.
 
 <!-- quiz -->
 
 <!-- material -->
-## O que olhar no estudo
+## Estudo de público
 
-- **Etiquetas.** Toda frase vem marcada. [DADO] veio de você. [PESQUISA] veio da web, com link. [HIPÓTESE] é inferência e sempre traz como validar.
-- **Teste do seu público.** A lista "para quem eu acho que vendo" volta com veredito item a item: sustentado, contradito ou sem dado suficiente.
-- **A conta financeira.** Diz quem pode comprar, não quem compra. Se faltar taxa ou condição, ele não inventa: diz o que falta.
-- **Perguntas do formulário.** De 3 a 5, prontas para o formulário instantâneo. A primeira faixa de renda começa na renda mínima do comercial.
-- **Hipóteses a validar.** Leve a tabela para os primeiros cadastros. Volte ao mesmo projeto com o export do CRM, sem nome, telefone e e-mail, e peça a revisão v2.
+**Para que serve:** antes de gastar um real em anúncio, descobrir quem tem motivo e condição de comprar o imóvel, quem não tem e o que ainda precisa ser provado. Serve para lançamento e para revenda.
+
+### Como usar
+
+1. Responda o quiz. Onde não souber, marque "Não sei". O Claude vai te dizer o que falta.
+2. Copie o prompt e abra um chat novo no Claude. Um imóvel por chat.
+3. Cole o prompt e anexe os arquivos que você marcou no quiz.
+4. Na primeira resposta, o Claude confere o que chegou e pergunta o que faltar. Responda e ele faz o estudo.
+5. No fim, ele entrega o estudo num bloco único. Copie e guarde.
+6. Quando os primeiros cadastros chegarem, volte ao mesmo chat e cole o export sem nome, telefone e e-mail.
+
+Funciona no plano grátis do Claude.
+
+### O que anexar
+
+- **Lançamento:** book ou apresentação, tabela, condição de pagamento e prazo de entrega.
+- **Pronto ou revenda:** anúncio, condomínio e IPTU, histórico de preço e autorização de venda.
+
+### Como ler o resultado
+
+- **[HIPÓTESE]:** não vira verba direto. Cada uma vira uma pergunta de formulário ou um teste. Se a hipótese é "quem compra é família que vai morar", a pergunta "morar ou investir" no formulário confirma ou derruba.
+- **[PESQUISA]:** abra o link e confira a data e a região.
+- **[DADO]:** confira se foi copiado certo do que você informou.
+- **Seu público percebido:** o estudo diz, item por item, se os dados sustentam ou contradizem. Leve a sério o que for contradito.
+- **Perfil descartado:** não faça criativo para ele.
+- **Critérios de MQL:** feche por escrito com quem vende antes de subir a campanha.
+- **Primeiros cadastros:** volte ao mesmo chat com o export. É aí que o estudo vira v2.
 
 <!-- proximo -->
-## Formulário instantâneo que filtra
-
-O estudo termina com as perguntas do formulário. O próximo material mostra como montar o formulário instantâneo que separa quem compra de quem só clica.
+As perguntas de formulário que saíram do estudo são o filtro do seu próximo anúncio. Pede o material FORMULARIO no nosso WhatsApp que a gente te mostra como montar o formulário instantâneo com elas.
 
 <!-- qualificado -->
-## Quer aplicar isso na sua operação?
+Esse estudo é a versão 1. Ele só vira verdade quando encontra o lead real: quem respondeu, quem virou MQL, quem visitou, quem comprou.
 
-A gente faz um diagnóstico de 30 minutos e te mostra onde estão os gaps da sua operação comercial.
+A maioria das operações não tem esse caminho registrado, e aí a hipótese nunca é testada.
 
-[Agendar diagnóstico gratuito →](https://calendar.app.google/3wJX8SBvu4HLUA8z5)
+O diagnóstico olha os três elos da sua operação, não só esse: público, captação e conversão juntos.
+
+São 30 minutos, gratuitos. Escolhe um horário.
 
 <!-- nao-qualificado -->
-## Os próximos materiais saem no Instagram
+Esse estudo é a versão 1. Ele só vira verdade quando encontra o lead real, e a maioria das operações não registra o caminho de cada lead até a venda.
 
-Cada material cobre um elo da operação: captar, posicionar e converter.
-
-[Ver @provecta.vgv no Instagram](https://instagram.com/provecta.vgv)
+No Instagram a gente mostra como faz isso na nossa operação.
