@@ -61,10 +61,16 @@ function mascara(v){
 $('zap').addEventListener('input', e => { e.target.value = mascara(e.target.value); });
 
 /* ---------- mensagem pronta do WhatsApp ---------- */
+/** Codigo do criativo, quando a URL traz utm_content. Sem ele, nada. */
+function sufixoCodigo(){
+  const c = (qs.get('utm_content') || '').trim();
+  return c ? ' (cód. ' + c + ')' : '';
+}
+
 function mensagem(seg, dados){
   if(seg === SEG_CONSTRUTORA){
     return 'Oi! Quero o material ' + nomeMat + '. Sou da ' + (dados.emp || 'minha construtora') +
-           ', empreendimento em ' + dados.etapa + ', VGV ' + dados.vgv + '.';
+           ', empreendimento em ' + dados.etapa + ', VGV ' + dados.vgv + '.' + sufixoCodigo();
   }
   if(PRECISA_VERBA.includes(seg)){
     const quem = seg === 'Imobiliária' ? 'imobiliária' : 'corretor autônomo';
@@ -72,9 +78,10 @@ function mensagem(seg, dados){
     const trecho = dados.verba === 'Não invisto'
       ? ' e ainda não invisto em anúncios.'
       : ' e invisto ' + dados.verba + ' em anúncios por mês.';
-    return 'Oi! Quero o material ' + nomeMat + '. Sou ' + quem + trecho;
+    return 'Oi! Quero o material ' + nomeMat + '. Sou ' + quem + trecho + sufixoCodigo();
   }
-  return 'Oi! Quero o material ' + nomeMat + '. Trabalho com marketing/outro no mercado imobiliário.';
+  return 'Oi! Quero o material ' + nomeMat +
+         '. Trabalho com marketing/outro no mercado imobiliário.' + sufixoCodigo();
 }
 
 /* ---------- destino pos-envio ---------- */
