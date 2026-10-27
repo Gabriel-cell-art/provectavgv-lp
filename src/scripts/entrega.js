@@ -68,6 +68,12 @@ function mensagemProximo(){
          ' e quero o próximo: ' + prox + '.';
 }
 
+/** Pedido do proprio material pelo WhatsApp, quando nao ha link para abrir. */
+function mensagemPedido(){
+  return 'Oi! Vim da página do material ' + material.palavra +
+         (segmento ? ', sou ' + segmento + ',' : '') + ' e quero receber o material.';
+}
+
 /** Markdown -> HTML. Paragrafo que e so um link vira botao. */
 function renderizar(md, classeBotao){
   const div = h('div', { class:'ent-md' });
@@ -244,6 +250,7 @@ async function iniciarQuiz(bloco, raiz){
 
   montarQuiz(bloco, dados.quiz, dados.prompt, Object.assign({}, contexto, {
     aoCopiar: popup.aoCopiar,
+    aoEntregarPrompt: popup.aoEntregarPrompt,
     proximo
   }));
 }
@@ -257,8 +264,17 @@ function montarSimples(){
   // o botao tem target="_blank" e href="#", entao se qualquer regra de CSS
   // vencer o [hidden] ele volta a aparecer e abre a propria pagina numa
   // guia nova. Remover nao depende de estilo nenhum.
-  if(material.urlMaterial) $('entBotao').href = material.urlMaterial;
-  else $('entBotao').remove();
+  if(material.urlMaterial){
+    $('entBotao').href = material.urlMaterial;
+  }else{
+    // Sem link proprio, o caminho e pedir pelo WhatsApp: o botao passa a
+    // levar para a conversa, em vez de sumir e deixar o cartao sem saida.
+    const b = $('entBotao');
+    b.href = linkWhatsapp(WHATSAPP_NUMERO, mensagemPedido());
+    b.target = '_blank'; b.rel = 'noopener';
+    b.addEventListener('click', pixelContato);
+    b.replaceChildren('Pedir no WhatsApp ', h('span', { class:'seta' }, '→'));
+  }
   $('blocoMaterial').hidden     = false;
 
   // Proximo elo: para todos, mas so se o destino existe e esta ativo.

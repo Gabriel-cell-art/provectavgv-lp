@@ -229,6 +229,13 @@ export function iniciarPopup(ctx){
     aoCopiar(){
       clearTimeout(timer);
       timer = setTimeout(()=>tentarAbrir(true), (cfg.segundosAposCopia || 30) * 1000);
+    },
+
+    /** Chamado quando o prompt aparece na tela, copiado ou nao. */
+    aoEntregarPrompt(){
+      if(aberto || abertoNestaSessao || respondido()) return;
+      clearTimeout(timer);
+      timer = setTimeout(()=>tentarAbrir(true), (cfg.segundosAposPrompt || 5) * 1000);
     }
   };
 }

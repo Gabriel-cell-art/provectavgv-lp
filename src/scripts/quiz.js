@@ -273,6 +273,9 @@ export function montarQuiz(raiz, quiz, modelo, ctx){
         irPara(0);
       }}, T.botaoRefazer)
     );
+    // O pop-up conta o tempo a partir daqui: o prompt esta na tela.
+    if(ctx.aoEntregarPrompt){ try{ ctx.aoEntregarPrompt(); }catch(e){} }
+
     if(focar){
       try{ raiz.querySelector('#qzTituloPrompt').focus({ preventScroll:true }); }catch(e){}
       raiz.scrollIntoView({ block:'start', behavior:'smooth' });
