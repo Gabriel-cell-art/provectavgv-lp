@@ -186,6 +186,21 @@ function montarSecoes(){
         if(!secao.md && !(secao.nome === 'material' && material.urlMaterial)) return;
         const c = cartao(secao);
         c.append(renderizar(secao.md, 'btn-fantasma'));
+        // Na intro de material com quiz, um botao que leva ao quiz na
+        // propria pagina. Rola em vez de navegar: nada de aba nova.
+        if(secao.nome === 'intro' && material.quiz === true){
+          c.append(h('button', { type:'button', class:'btn btn-primario ent-cta',
+            onclick:()=>{
+              const alvo = $('blocoQuiz');
+              if(!alvo) return;
+              const suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+              alvo.scrollIntoView({ behavior: suave ? 'smooth' : 'auto', block:'start' });
+              // Foco na pergunta, para quem navega por teclado ou leitor de tela.
+              const q = alvo.querySelector('#qzPergunta, .qz-pergunta, input, button');
+              if(q) setTimeout(()=>{ try{ q.focus({ preventScroll:true }); }catch(e){} }, 420);
+            }
+          }, 'Responder o quiz ', h('span', { class:'seta' }, '→')));
+        }
         if(secao.nome === 'material' && material.urlMaterial){
           c.append(h('a', { class:'btn btn-primario ent-cta', href:material.urlMaterial, target:'_blank', rel:'noopener' },
             'Abrir material ', h('span', { class:'seta' }, '→')));

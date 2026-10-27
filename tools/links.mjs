@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const B='http://localhost:5200';
+const B='http://localhost:5300';
 const PAGS=['/entrega/?m=FUNIL','/entrega/?m=AUDITORIA','/entrega/?m=PUBLICO',
   '/entrega/?m=EQUIPE','/entrega/?m=META','/entrega/?m=FORMULARIO','/entrega/?m=CADENCIA',
   '/entrega/?m=FICHA','/entrega/?m=ROTEIRO','/entrega/?m=TREINO','/entrega/?m=NAOEXISTE',
