@@ -1,0 +1,22 @@
+[
+  { "chave":"tipo", "texto":"Que tipo de produto é?", "tipo":"unica", "obrigatoria":true,
+    "opcoes":["Lançamento na planta","Em obra","Pronto para morar","Revenda"] },
+  { "chave":"faixa_preco", "texto":"Qual a faixa de preço?", "tipo":"unica", "obrigatoria":true,
+    "opcoes":["Até R$250 mil","R$250 a 500 mil","R$500 mil a 1 milhão","R$1 a 1,6 milhão","Acima de R$1,6 milhão","Não sei"] },
+  { "chave":"canal", "texto":"Por onde o lead entra?", "tipo":"unica", "obrigatoria":true,
+    "opcoes":["Formulário instantâneo","WhatsApp (clique para conversar)","Os dois","Outro (site, portal)"] },
+  { "chave":"periodo", "texto":"De que período são os números?", "tipo":"unica", "obrigatoria":true,
+    "opcoes":["Último mês","Últimos 3 meses","Últimos 6 meses","Último ano"] },
+  { "chave":"numeros", "texto":"Números do período", "tipo":"numeros", "obrigatoria":true,
+    "dica":"Vale \"não sei\" em qualquer campo. Marcar \"não sei\" é melhor que chutar.",
+    "campos":[
+      { "chave":"investimento",       "rotulo":"Investimento em mídia", "formato":"moeda" },
+      { "chave":"leads",              "rotulo":"Leads" },
+      { "chave":"responderam",        "rotulo":"Responderam" },
+      { "chave":"qualificados",       "rotulo":"Qualificados" },
+      { "chave":"visitas_agendadas",  "rotulo":"Visitas agendadas" },
+      { "chave":"visitas_realizadas", "rotulo":"Visitas realizadas" },
+      { "chave":"propostas",          "rotulo":"Propostas" },
+      { "chave":"vendas",             "rotulo":"Vendas" }
+    ] }
+]
