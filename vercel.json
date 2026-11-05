@@ -38,5 +38,47 @@
       "source": "/entrega",
       "destination": "/entrega/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:codigo(aud\\d{2}[a-z]s)",
+      "destination": "/?m=AUDITORIA&utm_source=instagram&utm_medium=stories&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(frm\\d{2}[a-z]s)",
+      "destination": "/?m=FORMULARIO&utm_source=instagram&utm_medium=stories&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(fun\\d{2}[a-z]s)",
+      "destination": "/?m=FUNIL&utm_source=instagram&utm_medium=stories&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(pub\\d{2}[a-z]s)",
+      "destination": "/?m=PUBLICO&utm_source=instagram&utm_medium=stories&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(aud\\d{2}[a-z])",
+      "destination": "/?m=AUDITORIA&utm_source=instagram&utm_medium=organico&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(frm\\d{2}[a-z])",
+      "destination": "/?m=FORMULARIO&utm_source=instagram&utm_medium=organico&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(fun\\d{2}[a-z])",
+      "destination": "/?m=FUNIL&utm_source=instagram&utm_medium=organico&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    },
+    {
+      "source": "/:codigo(pub\\d{2}[a-z])",
+      "destination": "/?m=PUBLICO&utm_source=instagram&utm_medium=organico&utm_campaign=funil-ia&utm_content=:codigo",
+      "permanent": false
+    }
   ]
 }
