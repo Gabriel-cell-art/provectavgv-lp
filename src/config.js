@@ -7,7 +7,7 @@
 
 // Formato internacional exigido pelo wa.me: 55 + DDD + numero, so digitos.
 // Unico numero do site: home, Proximo elo e pop-up de diagnostico.
-export const WHATSAPP_NUMERO = '5571993068515';
+export const WHATSAPP_NUMERO = '5571993698585';
 
 // Botao do bloco qualificado (q=1): o unico caminho para o diagnostico.
 export const AGENDA_URL = 'https://calendar.app.google/3wJX8SBvu4HLUA8z5';
